@@ -1,0 +1,893 @@
+{% extends './base.html' %}
+
+{% block title %}Consulta Socios{% endblock %}
+{% block customCSS %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+        #example td, th {
+        border: 1px solid #ddd;
+        /* Bordes de las celdas */
+        padding: 8px;
+        text-align: center;
+        /* Alineación horizontal al centro */
+        vertical-align: middle;
+        /* Alineación vertical al centro */
+    }
+
+    /* Aplica estilos específicos para la tabla dentro del modal */
+    .modal-body table {
+        width: 100%;
+        /* Ocupa el ancho completo del modal */
+        font-size: 0.9em;
+        /* Ajusta el tamaño del texto */
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Fondo semitransparente */
+        z-index: 999;
+        /* Debe estar sobre otros elementos */
+    }
+
+    .spinner-border {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        z-index: 1000;
+        /* Asegura que el spinner esté sobre la superposición */
+    }
+body {
+    background-color: #ffffff;
+    /*background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1px, rgba(242,242,242,1) 1px);*/
+    background-size: 20px 20px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+</style>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+{% endblock %}
+{% block body %}
+
+<div class="container-fluid" style="font-size: 95%;">
+
+    <h2 class="text-center">
+    Seguimiento de Solicitud de Préstamo
+</h2>
+
+    <div class="row">
+        <div class="col-sm-1"></div>
+
+
+        <!-- content goes here -->
+
+        <div class="col-sm-10">
+            {% if roles in ['ARCHIVO','ADMINISTRADOR'] %}
+            <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="fas fa-plus-circle"></i> Insertar Registro de Recepción</button>
+            {% endif %}
+            <button type="button" class="custom-button" data-bs-toggle="modal"
+                data-bs-target="#filtrosModal">
+                <i class="fas fa-search"></i> Solicitudes Faltantes por Usuario</button>
+            <br>
+
+
+            <h5 style="text-align: left;">Buscar Recibidos</h5>
+            <form action="{{ url_for('buscarPre')}}" method="POST" class="d-flex" style="margin-bottom: 10px;">
+
+                <label for="socio" style="margin-top: 5px;" class="me-2">Fecha Desde:</label>
+                <input style="width: 15%; height: 5%;" class="form-control me-2" type="date" name="fecha" id="fecha">
+                <label for="socio" style="margin-top: 5px;" class="me-2">Fecha Hasta:</label>
+                <input style="width: 15%; height: 5%;" class="form-control me-2" type="date" name="fecha_hasta"
+                    id="fecha_hasta">
+                <button class="custom-button" type="submit">
+                    <i class="fas fa-search"></i> Buscar</button>
+                </button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            {% if category == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!--Modal para buscar filtros-->
+            <div class="modal fade" id="filtrosModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Buscar Filtros</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="searchFormFiltros">
+                                <div class="form-group" style="display: flex; gap: 20px; align-items: center;">
+                                    <label for="fecha_solicitud_ini">Fecha Desde</label>
+                                    <input type="date" id="fecha_solicitud_ini" name="fecha_solicitud_ini"
+                                        class="form-control" style="width: auto;" required>
+                                    <label for="fecha_solicitud_hasta">Fecha Hasta</label>
+                                    <input type="date" id="fecha_solicitud_hasta" name="fecha_solicitud_hasta"
+                                        class="form-control" style="width: auto;" required>
+                                    <select class="form-select" id="users_filtro" name="users_filtro" required>
+                                        <option value="">Seleccione Usuario</option>
+                                        {% for usuario in usuarios %}
+                                        <option value="{{ usuario[0] }}">{{ usuario[1] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="button" id="filtrosButton" class="btn btn-primary">Buscar</button>
+                                </div>
+                            </form>
+                            <br>
+                            <div id="overlay" class="overlay" style="display: none;"></div>
+                            <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            
+                            <div id="filtrosResults">
+                                <!-- Aquí se generará la tabla con los resultados de la búsqueda -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal para buscar prestamo-->
+            <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Buscar Prestamos</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="searchForm">
+                                <div class="form-group" style="display: flex; gap: 20px; align-items: center;">
+                                    <label for="fecha_solicitud">Fecha Desde</label>
+                                    <input type="date" id="fecha_solicitud" name="fecha_solicitud" class="form-control"
+                                        style="width: auto;" required>
+                                    <label for="fecha_solicitud_fin">Fecha Hasta</label>
+                                    <input type="date" id="fecha_solicitud_fin" name="fecha_solicitud_fin"
+                                        class="form-control" style="width: auto;" required>
+                                    <select class="form-select" id="users" name="users" required>
+                                        <option value="">Seleccione Usuario</option>
+                                        {% for usuario in usuarios %}
+                                        <option value="{{ usuario[0] }}">{{ usuario[1] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="button" id="searchButton" class="btn btn-primary">Buscar</button>
+                                </div>
+                            </form>
+                            <br>
+                            <div id="overlay" class="overlay" style="display: none;"></div>
+                            <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <div id="searchResults">
+                                <!-- Aquí se generará la tabla con los resultados de la búsqueda -->
+                            </div>
+                            <button id="guardarSeleccionados" class="btn btn-success mt-3">Guardar
+                                Seleccionados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal para guardar prestamo-->
+            <div class="modal fade" id="prestamoModal" tabindex="-1" aria-labelledby="prestamoModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="prestamoModal">Insertar Registro</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-start">
+                            <form id="myForm" class="d-block">
+                                <input type="hidden" id="actionType" name="actionType" value="insert">
+                                <div class="mb-3">
+                                    <label for="fecha_recepcion" class="form-label">Fecha Recepcion</label>
+                                    <input type="date" class="form-control" id="fecha_recepcion" name="fecha_recepcion"
+                                        required readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nro_prestamo" class="form-label">Nro Prestamo</label>
+                                    <input type="text" class="form-control" id="nro_prestamo" name="nro_prestamo"
+                                        required readonly>
+                                </div>
+                                <div>
+                                    <label for="cod_cliente" class="form-label">Nro Socio</label>
+                                    <input type="number" class="form-control" id="cod_cliente" name="cod_cliente"
+                                        required readonly>
+                                </div>
+                                <div>
+                                    <label for="monto_pre" class="form-label">Importe</label>
+                                    <input type="number" class="form-control" id="monto_pre" name="monto_pre" required
+                                        readonly>
+                                </div>
+                                <input type="hidden" class="form-control" id="usuario_des" name="usuario_des" required>
+                                <input type="hidden" class="form-control" id="usuario_receptor" name="usuario_receptor"
+                                    required>
+                                <div class="mb-3">
+                                    <label for="estado" class="form-label">Estado</label>
+                                    <select class="form-select" id="estado" name="estado" required>
+                                        {% for estado in estados %}
+                                        <option value="{{ estado[0] }}">{{ estado[1] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div id="users-container" style="display: none;">
+                                    <label for="userss" class="form-label">Seleccionar Usuario</label>
+                                    <select class="form-select" id="userss" name="userss" required>
+                                        <option value="">Seleccione Usuario</option>
+                                        {% for usuario in usuarios %}
+                                        <option value="{{ usuario[1] }}">{{ usuario[1] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3 text-end">
+                                    <button type="button" id="saveButton" class="btn btn-primary">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        id="closeModal">Cerrar</button>
+                                </div>
+                            </form>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            {% if prestamos %}
+            
+
+            <div class="table table-responsive">
+                <table id="example" class="table table-striped" style="width:100%; font-size: 90%;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" data-field="nro_prestamo">Nro Prestamo</th>
+                            <th class="text-center" data-field="fecha_recepcion">Fecha Recepcion</th>
+                            <th class="text-center" data-field="importe_prestamo">Importe Prestamo</th>
+                            <th class="text-center" data-field="encargado">Recepcionado por</th>
+                            <th class="text-center" data-field="estado">Estado</th>
+                            <th class="text-center">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in prestamos %}
+                        <tr>
+                            <td>{{row.0}}</td>
+                            <td>{{row.3}}</td>
+                            <td>{{row.4}}</td>
+                            <td>{{row.6}}</td>
+                            <td>{{row.9}}
+                                {% if row.7 == 3 %}
+                                : <label for="">{{row.8}}</label>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if roles in ['ARCHIVO','ADMINISTRADOR'] %}
+                                <button class="btn btn-primary modificarPrestamo btn-sm" data-nro="{{row.0}}"
+                                    data-cod_cli="{{row.1}}" data-fecha_re="{{row.2}}" data-impr_pre="{{row.4}}"
+                                    data-estado="{{row.7}}" data-bs-toggle="modal"
+                                    data-bs-target="#prestamoModal">Modificar</button>
+                                <button class="btn btn-secondary eliminarPrestamo btn-sm" data-nro="{{row.0}}"
+                                    data-bs-toggle="modal" data-bs-target="#confirmModal">Eliminar</button>
+                                {% endif %}
+                                <button class="btn btn-secondary verHistorial btn-sm" data-nro="{{row.0}}">
+                                    Ver Historial
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<!--Modal de alertas-->
+<div class="modal fade" id="modalAlertas" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Mensaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyAlert">
+                <!-- Aquí se mostrará el mensaje -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cerrarModalAlert" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal de mensajes exitosos-->
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Mensaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Aquí se mostrará el mensaje -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cerrarModal" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmación Boton Eliminar -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="close ms-auto" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar el préstamo con el número <span id="nroPrestamoConfirm"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="overlay2" class="overlay" style="display: none;"></div>
+<div id="spinner2" class="spinner-border text-primary" role="status" style="display: none;">
+    <span class="visually-hidden">Cargando...</span>
+</div>
+
+
+
+
+
+<script>
+    document.getElementById('filtrosButton').addEventListener('click', function () {
+        // Obtener los valores de las fechas desde los inputs
+        const fechaInicio = document.getElementById('fecha_solicitud_ini').value;
+        const fechaFin = document.getElementById('fecha_solicitud_hasta').value;
+        const users = $('#users_filtro').val();
+
+        // Verificar que ambos campos tengan un valor
+
+
+        // Enviar las fechas al backend mediante fetch
+        fetch('/filtrosPre', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fecha_solicitud_ini: fechaInicio,
+                fecha_solicitud_hasta: fechaFin,
+                users: users
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    // Si el servidor devuelve un error, lee el contenido JSON del error
+                    return response.json().then(errData => {
+                        throw new Error(errData.error || 'Error desconocido del servidor');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                const contenidoModal = document.getElementById('filtrosResults');
+                contenidoModal.innerHTML = ''; // Limpia el contenido del modal
+
+                // Genera el contenido dinámico
+                for (const [fecha, prestamos] of Object.entries(data)) {
+                    const fechaObj = new Date(fecha); // Convierte la cadena a un objeto Date
+
+                    // Formatear la fecha sin la hora usando toLocaleDateString()
+                    const fechaFormateada = fechaObj.toLocaleDateString('es-ES');
+
+                    // Crear un contenedor para los elementos
+                    const contenedor = document.createElement('div');
+                    contenedor.style.display = 'flex';
+                    contenedor.style.alignItems = 'center'; // Alinea verticalmente
+                    contenedor.style.justifyContent = 'center';
+
+                    // Crear el encabezado
+                    const fechaHeader = document.createElement('h3');
+                    fechaHeader.textContent = `Fecha Desembolso: ${fechaFormateada}`;
+                    contenedor.appendChild(fechaHeader);
+
+                    // Crear el nuevo elemento (por ejemplo, un botón)
+                    const nuevoElemento = document.createElement('button');
+                    const nuevaPaginaURL = "{{ url_for('reporteFiltro.reporteFiltros') }}";
+                    nuevoElemento.className = 'btn btn-primary'
+                    nuevoElemento.textContent = 'Exportar Resultados';
+                    nuevoElemento.style.marginLeft = '10px'; // Espacio a la derecha del encabezado
+                    nuevoElemento.style.marginBottom = '10px';
+                    nuevoElemento.addEventListener('click', () => {
+                        // Navegar a una nueva página
+                        window.open(nuevaPaginaURL, '_blank'); // Abre en una nueva pestaña
+                        // O usa window.location.href para redirigir en la misma pestaña
+                    });
+                    contenedor.appendChild(nuevoElemento);
+
+                    // Agregar el contenedor al modal
+                    contenidoModal.appendChild(contenedor);
+
+                    // Crea una tabla para los préstamos de esa fecha
+                    const tablaPrestamos = document.createElement('table');
+                    tablaPrestamos.classList.add('table'); // Aplica clase de estilo (opcional)
+
+                    // Encabezado de la tabla
+                    const encabezado = document.createElement('thead');
+                    const filaEncabezado = document.createElement('tr');
+                    filaEncabezado.style.backgroundColor = 'lightgreen';
+                    filaEncabezado.innerHTML = `
+                    <th>Nro</th>
+                    <th>Nro de préstamo</th>
+                    <th>Titular</th>
+                    <th>Importe</th>
+                    <th>Encargado</th>
+                `;
+                    encabezado.appendChild(filaEncabezado);
+                    tablaPrestamos.appendChild(encabezado);
+
+                    // Crea el cuerpo de la tabla (tbody)
+                    const cuerpoTabla = document.createElement('tbody');
+                    var pre_existente = 0;
+
+                    prestamos.forEach((prestamo, index) => {
+                        const fila = document.createElement('tr');
+                        fila.innerHTML = `
+                        <td>${index + 1}</td> <!-- Numeración automática -->
+                        <td>${prestamo.nro_prestamo}</td>
+                        <td>${prestamo.titular}</td>
+                        <td>${prestamo.importe_prestamo}</td>
+                        <td>${prestamo.encargado}</td>
+                    `;
+                        cuerpoTabla.appendChild(fila);
+
+                        // Resalta la fila si el préstamo existe
+                        if (prestamo.existe) {
+                            pre_existente += 1;
+                            Array.from(fila.children).forEach(celda => {
+                                celda.style.backgroundColor = 'lightgreen'; // Fondo verde si existe
+                                celda.style.fontWeight = 'bold'; // Texto en negrita (opcional)
+                            });
+                        }
+                    });
+
+                    // Crea el pie de tabla (tfoot) para mostrar el resumen
+                    const pieTabla = document.createElement('tfoot');
+                    const filaPie = document.createElement('tr');
+                    const filaPie2 = document.createElement('tr');
+
+                    // Contenido del pie de tabla
+                    filaPie.innerHTML = `
+                    <td colspan="2">Solicitudes pendientes de entrega:</td>
+                    <td colspan="3">${prestamos.length - pre_existente}</td>
+                `;
+
+                    // Contenido del pie de tabla
+                    filaPie2.innerHTML = `
+                    <td colspan="2">Solicitudes Entregadas:</td>
+                    <td colspan="3">${pre_existente}</td>
+                `;
+
+                    // Aplica estilos opcionales al pie
+                    filaPie.style.fontWeight = 'bold';
+                    filaPie.style.backgroundColor = '#f0f0f0';
+                    filaPie2.style.fontWeight = 'bold';
+                    filaPie2.style.backgroundColor = '#f0f0f0';
+
+                    pieTabla.appendChild(filaPie);
+                    pieTabla.appendChild(filaPie2);
+                    tablaPrestamos.appendChild(pieTabla); // Agrega el pie a la tabla
+
+
+                    tablaPrestamos.appendChild(cuerpoTabla);
+                    contenidoModal.appendChild(tablaPrestamos); // Agrega la tabla al modal
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar los datos:', error);
+                document.getElementById('modalBodyAlert').textContent = error.message;
+                $('#modalAlertas').modal('show');
+                const contenidoModal = document.getElementById('filtrosResults');
+                contenidoModal.innerHTML = ''; // Limpia el contenido del modal
+            }
+
+            );
+    });
+
+
+    document.getElementById("cerrarModal").addEventListener("click", function () {
+        //$('#alertModal').modal('show');
+        window.location.reload();
+    });
+
+    document.getElementById("saveButton").addEventListener("click", function () {
+        const formData = new FormData(document.getElementById("myForm"));
+        const value = document.getElementById("actionType").value;
+
+        fetch('/guardarPre', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())  // Asegúrate de que el backend responda en JSON
+            .then(data => {
+                if (data.success) {
+                    // Cierra el modal
+                    $('#myModal').modal('hide');
+                    if (value === "insert") {
+                        window.location.href = data.redirect_url;
+                    }
+                    else {
+                        document.getElementById('modalBody').textContent = data.message;
+                        $('#alertModal').modal('show');
+                        //window.location.reload(); 
+                    }
+                } else {
+                    document.getElementById('modalBodyAlert').textContent = data.message;
+                    $('#modalAlertas').modal('show');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });    
+</script>
+
+<script>
+
+    const overlay = document.getElementById('overlay');
+    const spinner = document.getElementById('spinner');
+
+    function showLoaderPr() {
+        overlay.style.display = 'block';
+        spinner.style.display = 'block';
+    }
+
+    function hideLoaderPr() {
+        overlay.style.display = 'none';
+        spinner.style.display = 'none';
+    }
+
+    $(document).ready(function () {
+
+        //buscar prestamos para guardar
+        $('#searchButton').click(function () {
+            const fecha_solicitud = $('#fecha_solicitud').val();
+            const fecha_solicitud_fin = $('#fecha_solicitud_fin').val();
+            const users = $('#users').val();
+            // Mostrar la superposición y el spinner
+            showLoaderPr();
+
+            if (!fecha_solicitud || !fecha_solicitud_fin) {
+                hideLoaderPr();
+                $('#searchResults').html('<div class="alert alert-warning">Debe ingresar una fecha de solicitud.</div>');
+                return;
+            }
+
+            $.ajax({
+                url: '/buscarPrestamo',
+                method: 'POST',
+                data: {
+                    fecha_solicitud: fecha_solicitud,
+                    fecha_solicitud_fin: fecha_solicitud_fin,
+                    users: users
+                },
+                success: function (response) {
+                    if (response.prestamos && response.prestamos.length > 0) {
+                        hideLoaderPr();
+                        let tableHTML = '<table class="table">';
+                        tableHTML += '<thead><tr><th>Nro de Prestamo</th><th>Nro de Socio</th><th>Importe Préstamo</th><th>Titular</th><th>Encargado</th><!--th>Accion</th--><th>Recibir</th></tr></thead><tbody>';
+                        response.prestamos.forEach(prestamo => {
+                            tableHTML += `<tr>
+                            <td>${prestamo.nro_prestamo}</td>
+                            <td>${prestamo.cod_cliente}</td>
+                            <td>${prestamo.importe_prestamo}</td>
+                            <td>${prestamo.titular}</td>
+                            <td>${prestamo.encargado}</td>
+                            <!--td>
+                                <button class="btn btn-primary seleccionarPrestamo" 
+                                    data-nro="${prestamo.nro_prestamo}" 
+                                    data-cod_cli="${prestamo.cod_cliente}" 
+                                    data-importe="${prestamo.importe_prestamo}" 
+                                    data-titular="${prestamo.titular}" 
+                                    data-encargado="${prestamo.encargado}" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#prestamoModal">Seleccionar</button>
+                            </td-->
+                            <td>
+                                <input class="form-check-input registro-checkbox"
+                                    type="checkbox"
+                                    data-nro="${prestamo.nro_prestamo}" 
+                                    data-cod_cli="${prestamo.cod_cliente}" 
+                                    data-importe="${prestamo.importe_prestamo}" 
+                                    data-titular="${prestamo.titular}" 
+                                    data-encargado="${prestamo.encargado}">
+                            </td>
+                        </tr>
+                         `;
+                        });
+                        tableHTML += '</tbody></table>';
+                        $('#searchResults').html(tableHTML);
+                    } else if (response.message) {
+                        hideLoaderPr();
+                        $('#searchResults').html(`<div class="alert alert-info">${response.message}</div>`);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        hideLoaderPr();
+                        document.getElementById("total_reg").innerText = "0";
+                        $('#searchResults').html(`<div class="alert alert-warning">${xhr.responseJSON.error}</div>`);
+                    } else {
+                        hideLoaderPr();
+                        document.getElementById("total_reg").innerText = "0";
+                        $('#searchResults').html('<div class="alert alert-danger">Ocurrió un error en la búsqueda.</div>');
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '#guardarSeleccionados', function () {
+            const seleccionados = [];
+            $('.registro-checkbox:checked').each(function () {
+                seleccionados.push({
+                    nro_prestamo: $(this).data('nro'),
+                    cod_cliente: $(this).data('cod_cli'),
+                    fecha_solicitud_pre: $('#fecha_solicitud').val(),
+                    fecha_recepcion: new Date().toISOString().split('T')[0],  // Si tienes este campo en el formulario
+                    monto_pre: $(this).data('importe'),
+                    usuario_des: $(this).data('encargado'),  // Cambia según tu lógica
+                    usuario_receptor: $('#usuarioSesion').data('username'),  // Cambia según tu lógica
+                    estado: "1",  // Cambia según tu caso
+                    solicitado_por: ""  // Cambia según sea necesario
+                });
+            });
+
+            if (seleccionados.length === 0) {
+                document.getElementById('modalBodyAlert').textContent = "No se seleccionó ningun registro";
+                $('#modalAlertas').modal('show');
+                return;
+            }
+
+            const formData = new FormData();
+            seleccionados.forEach((prestamo, index) => {
+                formData.append(`prestamos`, JSON.stringify(prestamo));
+            });
+
+            // Enviar los datos al servidor
+            $.ajax({
+                url: '/guardarPrestamos',
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    document.getElementById('modalBody').textContent = response.message;
+                    $('#alertModal').modal('show');
+                    //alert(response.message);  // Mostrar el mensaje de éxito
+                },
+                error: function (xhr) {
+                    // Mostrar detalles del error en caso de que falle la solicitud
+                    const errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Error desconocido";
+                    const errorDetails = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "";
+
+                    // Mostrar el error detallado
+                    document.getElementById('modalBodyAlert').textContent = errorMessage;
+                    $('#modalAlertas').modal('show');
+                    //alert(`Error al guardar los registros: ${errorMessage}\nDetalles: ${errorDetails}`);
+                }
+            });
+
+        });
+
+
+        // Configurar el evento de clic para los botones "Seleccionar"
+        $(document).on('click', '.seleccionarPrestamo', function () {
+            // Obtener los datos del préstamo desde los atributos data-*
+            document.getElementById("saveButton").textContent = "Guardar";
+            document.getElementById("actionType").value = "insert";
+            const nroPrestamo = $(this).data('nro');
+            const cod_cliente = $(this).data('cod_cli');
+            const importePrestamo = $(this).data('importe');
+            const titular = $(this).data('titular');
+            const encargado = $(this).data('encargado');
+            const usuarioSesion = $('#usuarioSesion').data('username');
+            const today = new Date().toISOString().split('T')[0]; // Obtener la fecha en formato YYYY-MM-DD
+
+            $('#fecha_recepcion').val(today);
+            // Asignar los datos al formulario en el segundo modal
+            $('#nro_prestamo').val(nroPrestamo);
+            $('#cod_cliente').val(cod_cliente);
+            $('#usuario_des').val(encargado);
+            $('#usuario_receptor').val(usuarioSesion);
+            $('#monto_pre').val(importePrestamo);
+
+            // Abrir el segundo modal
+            $('#prestamoModal').modal('show');
+        });
+
+        // Configurar el evento de clic para los botones "Modificar"
+        $(document).on('click', '.modificarPrestamo', function () {
+            var status = document.getElementById('estado').value;
+            console.log(status);
+            document.getElementById('estado').addEventListener('change', function () {
+                var selectedValue = this.value;
+                var usersContainer = document.getElementById('users-container');
+
+                if (selectedValue === '3') {
+                    usersContainer.style.display = 'block';
+                } else {
+                    usersContainer.style.display = 'none';
+                    document.getElementById('userss').value = "";
+                }
+            });
+            document.getElementById("saveButton").textContent = "Actualizar";
+            document.getElementById("actionType").value = "update";
+            // Obtener los datos del préstamo desde los atributos data-*
+            const usuarioSesion = $('#usuarioSesion').data('username');
+            const nro_pre = $(this).data('nro');
+            const fecha_recepcion = $(this).data('fecha_re');
+            const estado = $(this).data('estado');
+            const nro_socio = $(this).data('cod_cli');
+            const importe = $(this).data('impr_pre');
+
+            $('#fecha_recepcion').val(fecha_recepcion);
+            $('#nro_prestamo').val(nro_pre);
+            $('#cod_cliente').val(nro_socio);
+            $('#monto_pre').val(importe);
+            $('#usuario_receptor').val(usuarioSesion);
+            $('#estado').val(estado);
+
+            // Abrir el segundo modal
+            $('#prestamoModal').modal('show');
+        });
+
+    });
+
+</script>
+
+<!-- Script para capturar el número de préstamo y confirmar la eliminación -->
+<script>
+    let nroPrestamo;  // Variable global para almacenar el número de préstamo
+    const overlay2 = document.getElementById('overlay2');
+    const spinner2 = document.getElementById('spinner2');
+    document.querySelector('form').addEventListener('submit', function (event) {
+        showLoader();  // Muestra el spinner antes de enviar el formulario
+    });
+    function showLoader() {
+        document.getElementById('overlay2').style.display = 'block';
+        document.getElementById('spinner2').style.display = 'block';
+    }
+
+    function hideLoader() {
+        document.getElementById('overlay2').style.display = 'none';
+        document.getElementById('spinner2').style.display = 'none';
+    }
+
+    // Detectar el clic en el botón de historial
+    async function fetchHistorial(nroPrestamo) {
+        try {
+            showLoader();
+            const response = await fetch('/historialPre', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ 'nro_prestamo': nroPrestamo })
+            });
+            const result = await response.json();
+
+            if (result.status === "success") {
+                window.open(result.redirect_url, '_blank');
+            } else {
+                document.getElementById('modalBodyAlert').textContent = result.message;
+                $('#modalAlertas').modal('show');
+            }
+        } catch (error) {
+            alert('Hubo un error al buscar el préstamo.');
+        } finally {
+            hideLoader();
+        }
+    }
+
+    $('.verHistorial').on('click', function () {
+        nroPrestamo = $(this).data('nro');
+        fetchHistorial(nroPrestamo);
+    });
+
+
+    // Detectar el clic en el botón de eliminación
+    $('.eliminarPrestamo').on('click', function () {
+        nroPrestamo = $(this).data('nro');  // Obtener el número de préstamo del atributo data-nro
+        $('#nroPrestamoConfirm').text(nroPrestamo);  // Mostrar el número en el modal
+    });
+
+    $('#guardarPrestamo').on('click', function () {
+        console.log("JAJA");
+    });
+
+    // Confirmar y enviar el número de préstamo para eliminar
+    $('#confirmDelete').on('click', function () {
+        $.ajax({
+            url: '/borrarPre',
+            method: 'POST',
+            data: { nro_prestamo: nroPrestamo },
+            success: function (response) {
+                if (response.status === "success") {
+                    $('#confirmModal').modal('hide');  // Cerrar el modal
+                    window.location.href = response.redirect_url; // Redirigir a la página prestamo_detalles
+                } else {
+                    alert("Error: " + response.message);
+                }
+            },
+            error: function (error) {
+                alert('Hubo un error al eliminar el préstamo.');
+            }
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datatables.js') }}"></script>
+
+<script>
+    new DataTable('#example');
+</script>
+
+{% endblock %}
+
+{% block footer %}
+
+<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    {% if current_user.is_authenticated %}
+    <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+        data-bs-toggle="dropdown" aria-expanded="false" id="usuarioSesion" data-username="{{ current_user.username }}">
+        <strong class="text-primary">Usuario: {{ current_user.username }}</strong>
+    </a>
+    <ul class="dropdown-menu text-small shadow">
+        <li><a class="dropdown-item" href="{{ url_for('cerrar_sesion') }}">Cerrar Sesion</a></li>
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}
