@@ -103,14 +103,18 @@ def login():
 @app.route('/prestamo_detalle')
 @role_required({'ARCHIVO', 'ADMINISTRADOR', 'CREDITO'})
 def prestamo():
-    session['prestamos'] = ''
-    session['prestamos_por_fecha'] = {}
-    rows = buscarEstados()
-    filas = buscarUsuarios()
-    rol_usuario = session.get('role')
-
-    # Pasar los datos de `estado` a la plantilla
-    return render_template('prestamo_detalle.html', estados=rows, usuarios=filas, roles = rol_usuario)
+    try:
+        session['prestamos'] = ''
+        session['prestamos_por_fecha'] = {}
+        rows = buscarEstados()
+        filas = buscarUsuarios()
+        rol_usuario = session.get('role')
+        # Pasar los datos de `estado` a la plantilla
+        return render_template('prestamo_detalle.html', estados=rows, usuarios=filas, roles = rol_usuario)
+    except Exception as e:
+        app.logger.error(f"Error en /prestamo_detalle: {str(e)}")
+        app.logger.error(f"Traceback: {traceback.format_exc()}")
+        return "Ocurrió un error en la página", 500
 
 @login_manager.user_loader
 def cargar_usuario(user_id):
@@ -338,6 +342,9 @@ def buscar_datos():
         fecha_solicitud_fin = request.form.get('fecha_solicitud_fin')
         if not fecha_solicitud:
             return jsonify({"error": "La fecha de solicitud es obligatoria"}), 400
+        
+        if not fecha_solicitud or not fecha_solicitud_fin:
+            return jsonify({"error": "La fecha de solicitud es obligatoria"}), 400
 
         # Formatear la fecha
         fecha_solicitud_fmt = datetime.strptime(fecha_solicitud, '%Y-%m-%d')
@@ -466,4 +473,5 @@ def schedule_thread():
 if __name__ == "__main__":
     scheduler_thread = threading.Thread(target=schedule_thread)
     scheduler_thread.start()
-    app.run(host='10.10.10.121', port=5000, debug=True)
+    app.config['DEBUG'] = True
+    app.run(host='0.0.0.0', port=5000, debug=True)

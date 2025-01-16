@@ -1,0 +1,141 @@
+{% extends './base.html' %}
+
+{% block title %}Consulta Socios{% endblock %}
+{% block customCSS %}
+
+<style>
+#example td {
+    border: 1px solid #ddd; /* Bordes de las celdas */
+    padding: 8px;
+    text-align: center; /* Alineación horizontal al centro */
+    vertical-align: middle; /* Alineación vertical al centro */
+}
+</style>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+{% endblock %}
+{% block body %}
+
+<div class="container-fluid" style="font-size: 95%;">
+
+    <h2 class="text-center alert alert-danger" >Generar Reporte de Walton</h2>
+
+    <div class="row">
+        <div class="col-sm-1"></div>
+
+        <!-- content goes here -->
+        <div class="col-sm-10">
+            <form action="{{ url_for('buscarWalton')}}" method="POST" class="d-flex" style="margin: 10px;">
+                <label for="date" style="margin-top: 5px;" class="me-2">Fecha Desembolso:</label>
+                <input style="width: 15%; height: 5%;" class="form-control me-2"
+                    type="date" onkeydown="redirecto: home" id="fecha" name="fecha">
+
+                    <label for="number" style="margin-top: 5px;" class="me-2">Nro de Autorizacion inicial:</label>
+                    <input style="width: 10%; height: 5%;" class="form-control me-2"
+                        type="number" onkeydown="redirecto: home" id="nro_auto" name="nro_auto" required>
+
+                <input style="width: 15%; height: 5%;" class="form-control me-2"
+                    type="hidden" name="fecha_formateada" id="fecha_formateada">
+                <button class="custom-button" type="submit">Buscar</button>
+                {% if autorizaciones|length > 1 %}
+                <a class="custom-button" href="{{ url_for('reporteWalton.reporte_excel')}}" target="_blank">Exportar en Excel</a>
+                {%endif%}
+            </form>
+        
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-primary alert-dismissible fade show mb-3" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+                <h4>Fecha Desembolso:
+                    {% if autorizaciones|length > 1 %}
+                    {{ autorizaciones[0].6 }}
+                    {%endif%}
+                </h4>
+
+
+            <div class="table table-responsive">
+                <table id="example" class="table table-striped" style="width:100%; font-size: 90%;">
+                    <thead>
+                        <tr>
+                            <th data-field="nro_documento">Nro de Ci</th>
+                            <th data-field="nombre" style="text-align: center;">Nombre</th>
+                            <th data-field="cod_cliente">Nro Socio</th>
+                            <th data-field="Nro de Prestamo">Nro de Prestamo</th>
+                            <th data-field="Nro de Autorizacion">Nro de Autorizacion</th>
+                            <th data-field="monto_cuota">Monto Cuota</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in autorizaciones %}
+                        <tr>
+                            <td>{{row.0}}</td>
+                            <td>{{row.1}}</td>
+                            <td>{{row.2}}</td>
+                            <td>{{row.3}}</td>
+                            <td>{{row.4}}</td>
+                            <td>{{row.5}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('fecha').addEventListener('change', function() {
+        const inputDate = new Date(this.value + 'T00:00');
+        const formattedDate = formatDate(inputDate);
+        document.getElementById('fecha_formateada').value = formattedDate;
+    });
+
+    function formatDate(date) {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son base 0
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datatables.js') }}"></script>
+
+<script>
+    new DataTable('#example');
+</script>
+
+
+{% endblock %}
+
+{% block footer %}
+
+<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    {% if current_user.is_authenticated %}
+    <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <strong class="text-primary">Usuario: {{ current_user.username }}</strong>
+    </a>
+    <ul class="dropdown-menu text-small shadow">
+        <li><a class="dropdown-item" href="{{ url_for('cerrar_sesion') }}">Cerrar Sesion</a></li>
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

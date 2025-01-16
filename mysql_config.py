@@ -1,24 +1,38 @@
+import json
+import os
+import sys
 import mysql.connector
 from mysql.connector import Error
+import logging
 
-# Configuración de conexión a la base de datos
-db_config = {
-    'user': 'root',
-    'password': '',
-    'host': 'localhost',
-    'database': 'gestion_prestamo'
-}
+def get_base_path():
+    if getattr(sys, 'frozen', False):  # Si el script está empaquetado con PyInstaller
+        return sys._MEIPASS
+    return os.path.abspath(".")
+
+
+def cargar_configuracion():
+    base_path = get_base_path()
+    config_path = os.path.join(base_path, "db_config.json")
+    try:
+        with open(config_path, "r") as file:
+            return json.load(file)
+    except Exception as e:
+        logging.error(f"Error al cargar el archivo JSON: {e}")
+        return None
 
 def probar_conexion():
     try:
+        db_config = cargar_configuracion()
         # Establecer la conexión
         conexion = mysql.connector.connect(**db_config)
 
         # Verificar si la conexión es exitosa
         if conexion.is_connected():
             return conexion
-    except Error as e:
-        print("Error en la conexión a la base de datos:", e)
+    except mysql.connector.Error as err:
+        logging.error(f"Error de conexión a la base de datos: {err}")
+        return None
 
 def buscarPrestamo(fecha_solicitud, fecha_fin):
         connection = probar_conexion()
@@ -136,6 +150,9 @@ def eliminarPrestamo(nro_prestamo):
 
 def buscarEstados():
     conexion = probar_conexion()
+    if not conexion:
+        logging.error("No se pudo cargar la configuración de la base de datos.")
+        return None
     try:
         cursor = conexion.cursor()          
         sql = """SELECT * FROM estado"""
