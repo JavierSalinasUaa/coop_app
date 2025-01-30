@@ -1,5 +1,5 @@
 from flask import Blueprint, session, make_response
-from reporte import generate_pdf_cambios
+from models.reporte import generate_pdf_cambios
 
 # Crear un objeto Blueprint
 reporteCamb = Blueprint('reporteCamb', __name__)

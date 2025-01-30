@@ -13,7 +13,8 @@ def get_base_path():
 
 def cargar_configuracion():
     base_path = get_base_path()
-    config_path = os.path.join(base_path, "db_config.json")
+    config_path = os.path.join(base_path, "models", "db_config.json")
+
     try:
         with open(config_path, "r") as file:
             return json.load(file)

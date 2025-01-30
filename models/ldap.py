@@ -2,9 +2,9 @@ from flask_login import login_user
 from flask import session
 from ldap3 import Server, Connection, ALL, NTLM, SUBTREE
 from ldap3.core.exceptions import LDAPBindError
-from prestamo import buscarRol
-
 from models.entities.User import Usuario
+from models.source_prestamo import buscarRol
+
 def obtenerdatos(usuario, contrasena):
 # Configura la conexión LDAP
     server = Server('ldap://10.10.10.240', get_info=ALL)

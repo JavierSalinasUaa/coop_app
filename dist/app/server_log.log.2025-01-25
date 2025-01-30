@@ -1,0 +1,65 @@
+2025-01-25 12:06:39,329 - INFO - /
+2025-01-25 12:06:39,376 - INFO - Sesion cerrada por inactividad para: fran garcia
+2025-01-25 12:06:39,391 - INFO - /
+2025-01-25 12:06:39,407 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:39] "[32mGET / HTTP/1.1[0m" 302 -
+2025-01-25 12:06:39,439 - INFO - /login
+2025-01-25 12:06:39,455 - INFO - /login
+2025-01-25 12:06:39,455 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:39] "GET /login HTTP/1.1" 200 -
+2025-01-25 12:06:39,501 - INFO - /static/css/login_2.css
+2025-01-25 12:06:39,501 - INFO - /static/img/logo2.png
+2025-01-25 12:06:39,518 - INFO - /static/css/login_2.css
+2025-01-25 12:06:39,518 - INFO - /static/img/logo2.png
+2025-01-25 12:06:39,518 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:39] "[36mGET /static/img/logo2.png HTTP/1.1[0m" 304 -
+2025-01-25 12:06:39,518 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:39] "[36mGET /static/css/login_2.css HTTP/1.1[0m" 304 -
+2025-01-25 12:06:39,564 - INFO - /static/img/logo3.png
+2025-01-25 12:06:39,564 - INFO - /static/img/logo3.png
+2025-01-25 12:06:39,580 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:39] "[36mGET /static/img/logo3.png HTTP/1.1[0m" 304 -
+2025-01-25 12:06:43,791 - INFO - /login_dom
+2025-01-25 12:06:44,465 - INFO - /login_dom
+2025-01-25 12:06:44,465 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[32mPOST /login_dom HTTP/1.1[0m" 302 -
+2025-01-25 12:06:44,496 - INFO - /
+2025-01-25 12:06:44,496 - INFO - /
+2025-01-25 12:06:44,496 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "GET / HTTP/1.1" 200 -
+2025-01-25 12:06:44,543 - INFO - /static/js/color-modes.js
+2025-01-25 12:06:44,543 - INFO - /static/js/sidebars.js
+2025-01-25 12:06:44,543 - INFO - /static/css/bootstrap.min.css
+2025-01-25 12:06:44,543 - INFO - /static/css/sidebars.css
+2025-01-25 12:06:44,559 - INFO - /static/js/bootstrap.bundle.min.js
+2025-01-25 12:06:44,559 - INFO - /static/css/bootstrap.min.css
+2025-01-25 12:06:44,559 - INFO - /static/css/sidebars.css
+2025-01-25 12:06:44,559 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[36mGET /static/css/bootstrap.min.css HTTP/1.1[0m" 304 -
+2025-01-25 12:06:44,559 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[36mGET /static/css/sidebars.css HTTP/1.1[0m" 304 -
+2025-01-25 12:06:44,575 - INFO - /static/js/bootstrap.bundle.min.js
+2025-01-25 12:06:44,575 - INFO - /static/js/sidebars.js
+2025-01-25 12:06:44,575 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[36mGET /static/js/bootstrap.bundle.min.js HTTP/1.1[0m" 304 -
+2025-01-25 12:06:44,575 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[36mGET /static/js/sidebars.js HTTP/1.1[0m" 304 -
+2025-01-25 12:06:44,575 - INFO - /static/js/color-modes.js
+2025-01-25 12:06:44,575 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[36mGET /static/js/color-modes.js HTTP/1.1[0m" 304 -
+2025-01-25 12:06:44,653 - INFO - /favicon.ico
+2025-01-25 12:06:44,653 - ERROR - Error durante la solicitud: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-01-25 12:06:44,653 - INFO - /favicon.ico
+2025-01-25 12:06:44,653 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:44] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-01-25 12:06:46,500 - INFO - /prestamo_detalle
+2025-01-25 12:06:46,547 - INFO - /prestamo_detalle
+2025-01-25 12:06:46,547 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "GET /prestamo_detalle HTTP/1.1" 200 -
+2025-01-25 12:06:46,626 - INFO - /static/css/custom.css
+2025-01-25 12:06:46,626 - INFO - /static/css/datatables.min.css
+2025-01-25 12:06:46,626 - INFO - /static/css/datatables.css
+2025-01-25 12:06:46,626 - INFO - /static/css/custom.css
+2025-01-25 12:06:46,626 - INFO - /static/css/datatables.min.css
+2025-01-25 12:06:46,626 - INFO - /static/css/datatables.css
+2025-01-25 12:06:46,626 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2025-01-25 12:06:46,626 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "[36mGET /static/css/datatables.min.css HTTP/1.1[0m" 304 -
+2025-01-25 12:06:46,626 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "[36mGET /static/css/datatables.css HTTP/1.1[0m" 304 -
+2025-01-25 12:06:46,642 - INFO - /static/js/datatables.js
+2025-01-25 12:06:46,642 - INFO - /static/js/datatables.min.js
+2025-01-25 12:06:46,673 - INFO - /static/js/datatables.js
+2025-01-25 12:06:46,673 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "[36mGET /static/js/datatables.js HTTP/1.1[0m" 304 -
+2025-01-25 12:06:46,688 - INFO - /static/js/datatables.min.js
+2025-01-25 12:06:46,688 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "[36mGET /static/js/datatables.min.js HTTP/1.1[0m" 304 -
+2025-01-25 12:06:46,814 - INFO - /static/img/coop_fondo.png
+2025-01-25 12:06:46,814 - INFO - /static/img/coop_fondo.png
+2025-01-25 12:06:46,830 - INFO - 10.10.10.105 - - [25/Jan/2025 12:06:46] "[36mGET /static/img/coop_fondo.png HTTP/1.1[0m" 304 -
+2025-01-25 12:07:24,986 - INFO - /filtrosPre
+2025-01-25 12:07:25,356 - INFO - /filtrosPre
+2025-01-25 12:07:25,371 - INFO - 10.10.10.105 - - [25/Jan/2025 12:07:25] "POST /filtrosPre HTTP/1.1" 200 -

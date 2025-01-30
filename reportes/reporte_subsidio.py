@@ -1,5 +1,5 @@
 from flask import Blueprint, session, make_response
-from reporte import generate_pdf
+from models.reporte import generate_pdf
 
 # Crear un objeto Blueprint
 report = Blueprint('reporte', __name__)

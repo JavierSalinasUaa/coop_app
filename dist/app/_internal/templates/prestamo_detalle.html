@@ -141,9 +141,19 @@ body {
                                 </div>
                             </form>
                             <br>
-                            <div id="overlay" class="overlay" style="display: none;"></div>
-                            <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                            <div id="overlaym1" class="overlay" style="display: none;"></div>
+                            <div id="spinnerm1" class="spinner-border text-primary" role="status" style="display: none;">
                                 <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center mb-3">
+                                <label for="totales">Total de Solicitudes de Prestamos:
+                                </label>
+                                <div id="total_prestamos">
+                                </div>
+                                <label for="totales" style="margin-left: 10%;">Total de Solicitudes Pendientes de Entrega:
+                                </label>
+                                <div id="total_pendientes">
+                                </div>
                             </div>
                             
                             <div id="filtrosResults">
@@ -181,8 +191,8 @@ body {
                                 </div>
                             </form>
                             <br>
-                            <div id="overlay" class="overlay" style="display: none;"></div>
-                            <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                            <div id="overlaym2" class="overlay" style="display: none;"></div>
+                            <div id="spinnerm2" class="spinner-border text-primary" role="status" style="display: none;">
                                 <span class="visually-hidden">Cargando...</span>
                             </div>
                             <div id="tableContainer" style="display: none;">
@@ -396,6 +406,12 @@ body {
         const fechaInicio = document.getElementById('fecha_solicitud_ini').value;
         const fechaFin = document.getElementById('fecha_solicitud_hasta').value;
         const users = $('#users_filtro').val();
+        var total_pre = document.getElementById('total_prestamos');
+        var total_pen = document.getElementById('total_pendientes');
+        var total_prestamos = 0;
+        var pendientes = 0;
+
+        showLoaderPr();
 
         // Verificar que ambos campos tengan un valor
 
@@ -419,11 +435,12 @@ body {
                         throw new Error(errData.error || 'Error desconocido del servidor');
                     });
                 }
+                hideLoaderPr();
                 return response.json();
             })
-            .then(data => {
+            .then(data => {                
                 const contenidoModal = document.getElementById('filtrosResults');
-                contenidoModal.innerHTML = ''; // Limpia el contenido del modal
+                contenidoModal.innerHTML = ''; // Limpia el contenido del modal                
 
                 // Genera el contenido dinámico
                 for (const [fecha, prestamos] of Object.entries(data)) {
@@ -439,14 +456,14 @@ body {
                     contenedor.style.justifyContent = 'center';
 
                     // Crear el encabezado
-                    const fechaHeader = document.createElement('h3');
+                    const fechaHeader = document.createElement('h4');
                     fechaHeader.textContent = `Fecha Desembolso: ${fechaFormateada}`;
                     contenedor.appendChild(fechaHeader);
 
                     // Crear el nuevo elemento (por ejemplo, un botón)
                     const nuevoElemento = document.createElement('button');
                     const nuevaPaginaURL = "{{ url_for('reporteFiltro.reporteFiltros') }}";
-                    nuevoElemento.className = 'btn btn-primary'
+                    nuevoElemento.className = 'btn btn-primary btn-sm'
                     nuevoElemento.textContent = 'Exportar Resultados';
                     nuevoElemento.style.marginLeft = '10px'; // Espacio a la derecha del encabezado
                     nuevoElemento.style.marginBottom = '10px';
@@ -483,6 +500,7 @@ body {
                     var pre_existente = 0;
 
                     prestamos.forEach((prestamo, index) => {
+                        total_prestamos += 1;
                         const fila = document.createElement('tr');
                         fila.innerHTML = `
                         <td>${index + 1}</td> <!-- Numeración automática -->
@@ -503,6 +521,7 @@ body {
                         }
                     });
 
+                    
                     // Crea el pie de tabla (tfoot) para mostrar el resumen
                     const pieTabla = document.createElement('tfoot');
                     const filaPie = document.createElement('tr');
@@ -513,6 +532,7 @@ body {
                     <td colspan="2">Solicitudes pendientes de entrega:</td>
                     <td colspan="3">${prestamos.length - pre_existente}</td>
                 `;
+                    pendientes += (prestamos.length - pre_existente);
 
                     // Contenido del pie de tabla
                     filaPie2.innerHTML = `
@@ -534,8 +554,15 @@ body {
                     tablaPrestamos.appendChild(cuerpoTabla);
                     contenidoModal.appendChild(tablaPrestamos); // Agrega la tabla al modal
                 }
+                total_pre.innerHTML = total_prestamos;
+                total_pen.innerHTML = pendientes;
+
+                
             })
             .catch(error => {
+                hideLoaderPr();
+                total_pre.innerHTML = '0';
+                total_pen.innerHTML = '0';
                 console.error('Error al cargar los datos:', error);
                 document.getElementById('modalBodyAlert').textContent = error.message;
                 $('#modalAlertas').modal('show');
@@ -604,17 +631,23 @@ body {
 
 <script>
 
-    const overlay = document.getElementById('overlay');
-    const spinner = document.getElementById('spinner');
+    const overlay = document.getElementById('overlaym1');
+    const spinner = document.getElementById('spinnerm1');
+    const overlaym2 = document.getElementById('overlaym2');
+    const spinnerm2 = document.getElementById('spinnerm2');
 
     function showLoaderPr() {
         overlay.style.display = 'block';
         spinner.style.display = 'block';
+        overlaym2.style.display = 'block';
+        spinnerm2.style.display = 'block';
     }
 
     function hideLoaderPr() {
         overlay.style.display = 'none';
         spinner.style.display = 'none';
+        overlaym2.style.display = 'none';
+        spinnerm2.style.display = 'none';
     }
 
     $(document).ready(function () {

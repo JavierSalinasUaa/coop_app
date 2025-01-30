@@ -1,5 +1,6 @@
-from config import conectar_bd
 import pyodbc
+
+from models.config import conectar_bd
 
 def obtener_datos_prestamos(fecha_inicio):
     # Ejecutar la consulta

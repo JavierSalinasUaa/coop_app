@@ -1,4 +1,4 @@
-from config import conectar_bd
+from models.config import conectar_bd
 import pyodbc
 
 def obtener_datos_subsidio(id_buscar):

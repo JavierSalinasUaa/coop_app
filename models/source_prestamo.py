@@ -1,5 +1,6 @@
-from config import conectar_bd
 import pyodbc
+
+from models.config import conectar_bd
 
 def obtener_datos_solicitud_prestamo(fecha_solicitud_ini, fecha_solicitud_fin, id_user=None):
     # Ejecutar la consulta
