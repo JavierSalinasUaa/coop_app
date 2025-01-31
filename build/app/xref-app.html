@@ -24,6 +24,9 @@ imports:
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#collections.abc">collections.abc</a>
+ &#8226;   <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+ &#8226;   <a href="#controllers.subsidio_controller">controllers.subsidio_controller</a>
+ &#8226;   <a href="#controllers.walton_controller">controllers.walton_controller</a>
  &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#encodings">encodings</a>
@@ -149,7 +152,6 @@ imports:
  &#8226;   <a href="#encodings.uu_codec">encodings.uu_codec</a>
  &#8226;   <a href="#encodings.zlib_codec">encodings.zlib_codec</a>
  &#8226;   <a href="#enum">enum</a>
- &#8226;   <a href="#errno">errno</a>
  &#8226;   <a href="#flask">flask</a>
  &#8226;   <a href="#flask_login">flask_login</a>
  &#8226;   <a href="#flask_session">flask_session</a>
@@ -159,18 +161,14 @@ imports:
  &#8226;   <a href="#heapq">heapq</a>
  &#8226;   <a href="#io">io</a>
  &#8226;   <a href="#keyword">keyword</a>
- &#8226;   <a href="#ldap">ldap</a>
  &#8226;   <a href="#linecache">linecache</a>
  &#8226;   <a href="#locale">locale</a>
- &#8226;   <a href="#logging">logging</a>
- &#8226;   <a href="#logging.handlers">logging.handlers</a>
  &#8226;   <a href="#models.entities.User">models.entities.User</a>
- &#8226;   <a href="#mysql_config">mysql_config</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#posixpath">posixpath</a>
- &#8226;   <a href="#prestamo">prestamo</a>
  &#8226;   <a href="#pyi_rth__tkinter.py">pyi_rth__tkinter.py</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
  &#8226;   <a href="#pyi_rth_multiprocessing.py">pyi_rth_multiprocessing.py</a>
@@ -192,13 +190,12 @@ imports:
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
  &#8226;   <a href="#stat">stat</a>
- &#8226;   <a href="#subsidio">subsidio</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
- &#8226;   <a href="#walton">walton</a>
+ &#8226;   <a href="#utils.logger">utils.logger</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -8763,25 +8760,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="config"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/config.py" type="text/plain"><tt>config</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#pyodbc">pyodbc</a>
- &#8226;   <a href="#time">time</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#prestamo">prestamo</a>
- &#8226;   <a href="#subsidio">subsidio</a>
- &#8226;   <a href="#walton">walton</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="configparser"></a>
   <a target="code" href="///C:/python/Lib/configparser.py" type="text/plain"><tt>configparser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -8956,6 +8934,82 @@ imported by:
  &#8226;   <a href="#unittest.async_case">unittest.async_case</a>
  &#8226;   <a href="#werkzeug.debug.console">werkzeug.debug.console</a>
  &#8226;   <a href="#werkzeug.local">werkzeug.local</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="controllers"></a>
+  <a target="code" href="-" type="text/plain"><tt>controllers</tt></a>
+<span class="moduletype">NamespacePackage</span>  <div class="import">
+imported by:
+    <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+ &#8226;   <a href="#controllers.subsidio_controller">controllers.subsidio_controller</a>
+ &#8226;   <a href="#controllers.walton_controller">controllers.walton_controller</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="controllers.prestamo_controller"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/controllers/prestamo_controller.py" type="text/plain"><tt>controllers.prestamo_controller</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#controllers">controllers</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#flask">flask</a>
+ &#8226;   <a href="#flask.app">flask.app</a>
+ &#8226;   <a href="#flask_login">flask_login</a>
+ &#8226;   <a href="#models.mysql_config">models.mysql_config</a>
+ &#8226;   <a href="#models.source_prestamo">models.source_prestamo</a>
+ &#8226;   <a href="#traceback">traceback</a>
+ &#8226;   <a href="#utils.decorators">utils.decorators</a>
+ &#8226;   <a href="#utils.logger">utils.logger</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#app.py">app.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="controllers.subsidio_controller"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/controllers/subsidio_controller.py" type="text/plain"><tt>controllers.subsidio_controller</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#controllers">controllers</a>
+ &#8226;   <a href="#flask">flask</a>
+ &#8226;   <a href="#flask_login">flask_login</a>
+ &#8226;   <a href="#models.source_subsidio">models.source_subsidio</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#app.py">app.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="controllers.walton_controller"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/controllers/walton_controller.py" type="text/plain"><tt>controllers.walton_controller</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#controllers">controllers</a>
+ &#8226;   <a href="#flask">flask</a>
+ &#8226;   <a href="#flask_login">flask_login</a>
+ &#8226;   <a href="#models.source_walton">models.source_walton</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#app.py">app.py</a>
 
   </div>
 
@@ -9378,6 +9432,7 @@ imported by:
  &#8226;   <a href="#cachelib.dynamodb">cachelib.dynamodb</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#click.types">click.types</a>
+ &#8226;   <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
  &#8226;   <a href="#dateutil.easter">dateutil.easter</a>
  &#8226;   <a href="#dateutil.parser._parser">dateutil.parser._parser</a>
  &#8226;   <a href="#dateutil.parser.isoparser">dateutil.parser.isoparser</a>
@@ -9413,6 +9468,7 @@ imported by:
  &#8226;   <a href="#ldap3.protocol.rfc2849">ldap3.protocol.rfc2849</a>
  &#8226;   <a href="#ldap3.strategy.reusable">ldap3.strategy.reusable</a>
  &#8226;   <a href="#ldap3.utils.conv">ldap3.utils.conv</a>
+ &#8226;   <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#mysql.connector.conversion">mysql.connector.conversion</a>
  &#8226;   <a href="#mysql.connector.dbapi">mysql.connector.dbapi</a>
  &#8226;   <a href="#mysql.connector.fabric.caching">mysql.connector.fabric.caching</a>
@@ -9467,7 +9523,6 @@ imported by:
  &#8226;   <a href="#pytz">pytz</a>
  &#8226;   <a href="#pytz.tzfile">pytz.tzfile</a>
  &#8226;   <a href="#pytz.tzinfo">pytz.tzinfo</a>
- &#8226;   <a href="#reporte">reporte</a>
  &#8226;   <a href="#reportes.reporte_filtros">reportes.reporte_filtros</a>
  &#8226;   <a href="#reportlab.lib.normalDate">reportlab.lib.normalDate</a>
  &#8226;   <a href="#reportlab.lib.utils">reportlab.lib.utils</a>
@@ -14718,8 +14773,7 @@ imported by:
   <a name="errno"></a>
   <tt>errno</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#app.py">app.py</a>
- &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+    <a href="#asyncio.selector_events">asyncio.selector_events</a>
  &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
  &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#cachelib.file">cachelib.file</a>
@@ -14840,6 +14894,9 @@ imports:
   <div class="import">
 imported by:
     <a href="#app.py">app.py</a>
+ &#8226;   <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+ &#8226;   <a href="#controllers.subsidio_controller">controllers.subsidio_controller</a>
+ &#8226;   <a href="#controllers.walton_controller">controllers.walton_controller</a>
  &#8226;   <a href="#flask">flask</a>
  &#8226;   <a href="#flask.app">flask.app</a>
  &#8226;   <a href="#flask.blueprints">flask.blueprints</a>
@@ -14868,11 +14925,12 @@ imported by:
  &#8226;   <a href="#flask_wtf.i18n">flask_wtf.i18n</a>
  &#8226;   <a href="#flask_wtf.recaptcha.validators">flask_wtf.recaptcha.validators</a>
  &#8226;   <a href="#flask_wtf.recaptcha.widgets">flask_wtf.recaptcha.widgets</a>
- &#8226;   <a href="#ldap">ldap</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
  &#8226;   <a href="#reportes.reporte_cambiosPrestamo">reportes.reporte_cambiosPrestamo</a>
  &#8226;   <a href="#reportes.reporte_filtros">reportes.reporte_filtros</a>
  &#8226;   <a href="#reportes.reporte_subsidio">reportes.reporte_subsidio</a>
  &#8226;   <a href="#reportes.reporte_walton">reportes.reporte_walton</a>
+ &#8226;   <a href="#utils.decorators">utils.decorators</a>
 
   </div>
 
@@ -14920,7 +14978,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#flask">flask</a>
+    <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+ &#8226;   <a href="#flask">flask</a>
  &#8226;   <a href="#flask.cli">flask.cli</a>
  &#8226;   <a href="#flask.ctx">flask.ctx</a>
  &#8226;   <a href="#flask.globals">flask.globals</a>
@@ -15591,6 +15650,9 @@ imports:
   <div class="import">
 imported by:
     <a href="#app.py">app.py</a>
+ &#8226;   <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+ &#8226;   <a href="#controllers.subsidio_controller">controllers.subsidio_controller</a>
+ &#8226;   <a href="#controllers.walton_controller">controllers.walton_controller</a>
  &#8226;   <a href="#flask_login.__about__">flask_login.__about__</a>
  &#8226;   <a href="#flask_login.config">flask_login.config</a>
  &#8226;   <a href="#flask_login.login_manager">flask_login.login_manager</a>
@@ -15598,8 +15660,9 @@ imported by:
  &#8226;   <a href="#flask_login.signals">flask_login.signals</a>
  &#8226;   <a href="#flask_login.test_client">flask_login.test_client</a>
  &#8226;   <a href="#flask_login.utils">flask_login.utils</a>
- &#8226;   <a href="#ldap">ldap</a>
  &#8226;   <a href="#models.entities.User">models.entities.User</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
+ &#8226;   <a href="#utils.decorators">utils.decorators</a>
 
   </div>
 
@@ -16317,6 +16380,7 @@ imported by:
  &#8226;   <a href="#unittest.result">unittest.result</a>
  &#8226;   <a href="#unittest.signals">unittest.signals</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
+ &#8226;   <a href="#utils.decorators">utils.decorators</a>
  &#8226;   <a href="#werkzeug.local">werkzeug.local</a>
  &#8226;   <a href="#werkzeug.wrappers.request">werkzeug.wrappers.request</a>
  &#8226;   <a href="#werkzeug.wsgi">werkzeug.wsgi</a>
@@ -16910,7 +16974,6 @@ imports:
  &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib._bootstrap">importlib._bootstrap</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
- &#8226;   <a href="#importlib.machinery">importlib.machinery</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#warnings">warnings</a>
 
@@ -17078,7 +17141,6 @@ imported by:
  &#8226;   <a href="#cffi.verifier">cffi.verifier</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#imp">imp</a>
- &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#packaging.tags">packaging.tags</a>
@@ -17937,6 +17999,7 @@ imported by:
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
  &#8226;   <a href="#lzma">lzma</a>
+ &#8226;   <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.popen_forkserver">multiprocessing.popen_forkserver</a>
  &#8226;   <a href="#multiprocessing.popen_spawn_posix">multiprocessing.popen_spawn_posix</a>
@@ -17979,7 +18042,6 @@ imported by:
  &#8226;   <a href="#pycparser">pycparser</a>
  &#8226;   <a href="#pydoc">pydoc</a>
  &#8226;   <a href="#quopri">quopri</a>
- &#8226;   <a href="#reporte">reporte</a>
  &#8226;   <a href="#reportes.reporte_walton">reportes.reporte_walton</a>
  &#8226;   <a href="#reportlab.graphics.renderPDF">reportlab.graphics.renderPDF</a>
  &#8226;   <a href="#reportlab.graphics.renderPM">reportlab.graphics.renderPM</a>
@@ -19245,7 +19307,7 @@ imported by:
  &#8226;   <a href="#ldap3.core.connection">ldap3.core.connection</a>
  &#8226;   <a href="#ldap3.protocol.rfc4512">ldap3.protocol.rfc4512</a>
  &#8226;   <a href="#ldap3.strategy.mockBase">ldap3.strategy.mockBase</a>
- &#8226;   <a href="#mysql_config">mysql_config</a>
+ &#8226;   <a href="#models.mysql_config">models.mysql_config</a>
  &#8226;   <a href="#numpy.__config__">numpy.__config__</a>
  &#8226;   <a href="#pandas.core.arrays.arrow.extension_types">pandas.core.arrays.arrow.extension_types</a>
  &#8226;   <a href="#pandas.core.generic">pandas.core.generic</a>
@@ -19343,27 +19405,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="ldap"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/ldap.py" type="text/plain"><tt>ldap</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#flask">flask</a>
- &#8226;   <a href="#flask_login">flask_login</a>
- &#8226;   <a href="#ldap3">ldap3</a>
- &#8226;   <a href="#ldap3.core.exceptions">ldap3.core.exceptions</a>
- &#8226;   <a href="#models.entities.User">models.entities.User</a>
- &#8226;   <a href="#prestamo">prestamo</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#app.py">app.py</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="ldap3"></a>
   <a target="code" href="///C:/python/Lib/site-packages/ldap3/__init__.py" type="text/plain"><tt>ldap3</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
@@ -19388,8 +19429,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ldap">ldap</a>
- &#8226;   <a href="#ldap3">ldap3</a>
+    <a href="#ldap3">ldap3</a>
  &#8226;   <a href="#ldap3.abstract">ldap3.abstract</a>
  &#8226;   <a href="#ldap3.abstract.attrDef">ldap3.abstract.attrDef</a>
  &#8226;   <a href="#ldap3.abstract.attribute">ldap3.abstract.attribute</a>
@@ -19445,6 +19485,7 @@ imported by:
  &#8226;   <a href="#ldap3.utils.repr">ldap3.utils.repr</a>
  &#8226;   <a href="#ldap3.utils.uri">ldap3.utils.uri</a>
  &#8226;   <a href="#ldap3.version">ldap3.version</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
 
   </div>
 
@@ -19715,8 +19756,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ldap">ldap</a>
- &#8226;   <a href="#ldap3.abstract.attrDef">ldap3.abstract.attrDef</a>
+    <a href="#ldap3.abstract.attrDef">ldap3.abstract.attrDef</a>
  &#8226;   <a href="#ldap3.abstract.attribute">ldap3.abstract.attribute</a>
  &#8226;   <a href="#ldap3.abstract.cursor">ldap3.abstract.cursor</a>
  &#8226;   <a href="#ldap3.abstract.entry">ldap3.abstract.entry</a>
@@ -19762,6 +19802,7 @@ imported by:
  &#8226;   <a href="#ldap3.utils.conv">ldap3.utils.conv</a>
  &#8226;   <a href="#ldap3.utils.dn">ldap3.utils.dn</a>
  &#8226;   <a href="#ldap3.utils.hashed">ldap3.utils.hashed</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
 
   </div>
 
@@ -22271,7 +22312,6 @@ imported by:
  &#8226;   <a href="#PIL.PngImagePlugin">PIL.PngImagePlugin</a>
  &#8226;   <a href="#PIL.PyAccess">PIL.PyAccess</a>
  &#8226;   <a href="#PIL.TiffImagePlugin">PIL.TiffImagePlugin</a>
- &#8226;   <a href="#app.py">app.py</a>
  &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
  &#8226;   <a href="#asyncio.log">asyncio.log</a>
  &#8226;   <a href="#cachelib.file">cachelib.file</a>
@@ -22285,10 +22325,10 @@ imported by:
  &#8226;   <a href="#jinja2.runtime">jinja2.runtime</a>
  &#8226;   <a href="#ldap3.utils.log">ldap3.utils.log</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
+ &#8226;   <a href="#models.mysql_config">models.mysql_config</a>
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#mysql.connector.fabric.caching">mysql.connector.fabric.caching</a>
  &#8226;   <a href="#mysql.connector.fabric.connection">mysql.connector.fabric.connection</a>
- &#8226;   <a href="#mysql_config">mysql_config</a>
  &#8226;   <a href="#packaging.tags">packaging.tags</a>
  &#8226;   <a href="#pyasn1.debug">pyasn1.debug</a>
  &#8226;   <a href="#reportlab.platypus.doctemplate">reportlab.platypus.doctemplate</a>
@@ -22311,6 +22351,7 @@ imported by:
  &#8226;   <a href="#setuptools.config.pyprojecttoml">setuptools.config.pyprojecttoml</a>
  &#8226;   <a href="#setuptools.logging">setuptools.logging</a>
  &#8226;   <a href="#unittest._log">unittest._log</a>
+ &#8226;   <a href="#utils.logger">utils.logger</a>
  &#8226;   <a href="#werkzeug._internal">werkzeug._internal</a>
  &#8226;   <a href="#wheel._setuptools_logging">wheel._setuptools_logging</a>
  &#8226;   <a href="#wheel.util">wheel.util</a>
@@ -22349,7 +22390,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#app.py">app.py</a>
+    <a href="#utils.logger">utils.logger</a>
 
   </div>
 
@@ -22650,7 +22691,34 @@ imported by:
   <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/__init__.py" type="text/plain"><tt>models</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
 imported by:
-    <a href="#models.entities">models.entities</a>
+    <a href="#models.config">models.config</a>
+ &#8226;   <a href="#models.entities">models.entities</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
+ &#8226;   <a href="#models.mysql_config">models.mysql_config</a>
+ &#8226;   <a href="#models.reporte">models.reporte</a>
+ &#8226;   <a href="#models.source_prestamo">models.source_prestamo</a>
+ &#8226;   <a href="#models.source_subsidio">models.source_subsidio</a>
+ &#8226;   <a href="#models.source_walton">models.source_walton</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.config"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/config.py" type="text/plain"><tt>models.config</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#models">models</a>
+ &#8226;   <a href="#pyodbc">pyodbc</a>
+ &#8226;   <a href="#time">time</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#models.source_prestamo">models.source_prestamo</a>
+ &#8226;   <a href="#models.source_subsidio">models.source_subsidio</a>
+ &#8226;   <a href="#models.source_walton">models.source_walton</a>
 
   </div>
 
@@ -22685,7 +22753,132 @@ imports:
   <div class="import">
 imported by:
     <a href="#app.py">app.py</a>
- &#8226;   <a href="#ldap">ldap</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.ldap"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/ldap.py" type="text/plain"><tt>models.ldap</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#flask">flask</a>
+ &#8226;   <a href="#flask_login">flask_login</a>
+ &#8226;   <a href="#ldap3">ldap3</a>
+ &#8226;   <a href="#ldap3.core.exceptions">ldap3.core.exceptions</a>
+ &#8226;   <a href="#models">models</a>
+ &#8226;   <a href="#models.entities.User">models.entities.User</a>
+ &#8226;   <a href="#models.source_prestamo">models.source_prestamo</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#app.py">app.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.mysql_config"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/mysql_config.py" type="text/plain"><tt>models.mysql_config</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#json">json</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#models">models</a>
+ &#8226;   <a href="#mysql.connector">mysql.connector</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.reporte"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/reporte.py" type="text/plain"><tt>models.reporte</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#datetime">datetime</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#models">models</a>
+ &#8226;   <a href="#reportlab.lib">reportlab.lib</a>
+ &#8226;   <a href="#reportlab.lib.colors">reportlab.lib.colors</a>
+ &#8226;   <a href="#reportlab.lib.pagesizes">reportlab.lib.pagesizes</a>
+ &#8226;   <a href="#reportlab.lib.styles">reportlab.lib.styles</a>
+ &#8226;   <a href="#reportlab.lib.units">reportlab.lib.units</a>
+ &#8226;   <a href="#reportlab.pdfbase.pdfmetrics">reportlab.pdfbase.pdfmetrics</a>
+ &#8226;   <a href="#reportlab.platypus">reportlab.platypus</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#reportes.reporte_cambiosPrestamo">reportes.reporte_cambiosPrestamo</a>
+ &#8226;   <a href="#reportes.reporte_filtros">reportes.reporte_filtros</a>
+ &#8226;   <a href="#reportes.reporte_subsidio">reportes.reporte_subsidio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.source_prestamo"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/source_prestamo.py" type="text/plain"><tt>models.source_prestamo</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#models">models</a>
+ &#8226;   <a href="#models.config">models.config</a>
+ &#8226;   <a href="#pyodbc">pyodbc</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+ &#8226;   <a href="#models.ldap">models.ldap</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.source_subsidio"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/source_subsidio.py" type="text/plain"><tt>models.source_subsidio</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#models">models</a>
+ &#8226;   <a href="#models.config">models.config</a>
+ &#8226;   <a href="#pyodbc">pyodbc</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#controllers.subsidio_controller">controllers.subsidio_controller</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="models.source_walton"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/models/source_walton.py" type="text/plain"><tt>models.source_walton</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#models">models</a>
+ &#8226;   <a href="#models.config">models.config</a>
+ &#8226;   <a href="#pyodbc">pyodbc</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#controllers.walton_controller">controllers.walton_controller</a>
 
   </div>
 
@@ -23629,7 +23822,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#mysql.connector">mysql.connector</a>
+    <a href="#models.mysql_config">models.mysql_config</a>
+ &#8226;   <a href="#mysql.connector">mysql.connector</a>
  &#8226;   <a href="#mysql.connector.abstracts">mysql.connector.abstracts</a>
  &#8226;   <a href="#mysql.connector.authentication">mysql.connector.authentication</a>
  &#8226;   <a href="#mysql.connector.catch23">mysql.connector.catch23</a>
@@ -23653,7 +23847,6 @@ imported by:
  &#8226;   <a href="#mysql.connector.protocol">mysql.connector.protocol</a>
  &#8226;   <a href="#mysql.connector.utils">mysql.connector.utils</a>
  &#8226;   <a href="#mysql.connector.version">mysql.connector.version</a>
- &#8226;   <a href="#mysql_config">mysql_config</a>
 
   </div>
 
@@ -24248,26 +24441,6 @@ imports:
 imported by:
     <a href="#mysql.connector">mysql.connector</a>
  &#8226;   <a href="#mysql.connector.fabric.connection">mysql.connector.fabric.connection</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="mysql_config"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/mysql_config.py" type="text/plain"><tt>mysql_config</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#json">json</a>
- &#8226;   <a href="#logging">logging</a>
- &#8226;   <a href="#mysql.connector">mysql.connector</a>
- &#8226;   <a href="#os">os</a>
- &#8226;   <a href="#sys">sys</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#app.py">app.py</a>
 
   </div>
 
@@ -35621,6 +35794,7 @@ imported by:
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
  &#8226;   <a href="#lzma">lzma</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
+ &#8226;   <a href="#models.mysql_config">models.mysql_config</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.context">multiprocessing.context</a>
  &#8226;   <a href="#multiprocessing.forkserver">multiprocessing.forkserver</a>
@@ -35641,7 +35815,6 @@ imported by:
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#mysql.connector.connection">mysql.connector.connection</a>
  &#8226;   <a href="#mysql.connector.optionfiles">mysql.connector.optionfiles</a>
- &#8226;   <a href="#mysql_config">mysql_config</a>
  &#8226;   <a href="#netrc">netrc</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#ntpath">ntpath</a>
@@ -49223,24 +49396,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="prestamo"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/prestamo.py" type="text/plain"><tt>prestamo</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#config">config</a>
- &#8226;   <a href="#pyodbc">pyodbc</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#app.py">app.py</a>
- &#8226;   <a href="#ldap">ldap</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="psutil"></a>
   <a target="code" href="" type="text/plain"><tt>psutil</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
@@ -50346,10 +50501,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#config">config</a>
- &#8226;   <a href="#prestamo">prestamo</a>
- &#8226;   <a href="#subsidio">subsidio</a>
- &#8226;   <a href="#walton">walton</a>
+    <a href="#models.config">models.config</a>
+ &#8226;   <a href="#models.source_prestamo">models.source_prestamo</a>
+ &#8226;   <a href="#models.source_subsidio">models.source_subsidio</a>
+ &#8226;   <a href="#models.source_walton">models.source_walton</a>
 
   </div>
 
@@ -51125,32 +51280,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="reporte"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/reporte.py" type="text/plain"><tt>reporte</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#datetime">datetime</a>
- &#8226;   <a href="#io">io</a>
- &#8226;   <a href="#reportlab.lib">reportlab.lib</a>
- &#8226;   <a href="#reportlab.lib.colors">reportlab.lib.colors</a>
- &#8226;   <a href="#reportlab.lib.pagesizes">reportlab.lib.pagesizes</a>
- &#8226;   <a href="#reportlab.lib.styles">reportlab.lib.styles</a>
- &#8226;   <a href="#reportlab.lib.units">reportlab.lib.units</a>
- &#8226;   <a href="#reportlab.pdfbase.pdfmetrics">reportlab.pdfbase.pdfmetrics</a>
- &#8226;   <a href="#reportlab.platypus">reportlab.platypus</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#reportes.reporte_cambiosPrestamo">reportes.reporte_cambiosPrestamo</a>
- &#8226;   <a href="#reportes.reporte_filtros">reportes.reporte_filtros</a>
- &#8226;   <a href="#reportes.reporte_subsidio">reportes.reporte_subsidio</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="reportes"></a>
   <a target="code" href="-" type="text/plain"><tt>reportes</tt></a>
 <span class="moduletype">NamespacePackage</span>  <div class="import">
@@ -51170,7 +51299,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#flask">flask</a>
- &#8226;   <a href="#reporte">reporte</a>
+ &#8226;   <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportes">reportes</a>
 
   </div>
@@ -51189,7 +51318,7 @@ imported by:
 imports:
     <a href="#datetime">datetime</a>
  &#8226;   <a href="#flask">flask</a>
- &#8226;   <a href="#reporte">reporte</a>
+ &#8226;   <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportes">reportes</a>
 
   </div>
@@ -51207,7 +51336,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#flask">flask</a>
- &#8226;   <a href="#reporte">reporte</a>
+ &#8226;   <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportes">reportes</a>
 
   </div>
@@ -51950,7 +52079,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.graphics.charts.legends">reportlab.graphics.charts.legends</a>
  &#8226;   <a href="#reportlab.graphics.charts.piecharts">reportlab.graphics.charts.piecharts</a>
  &#8226;   <a href="#reportlab.graphics.charts.textlabels">reportlab.graphics.charts.textlabels</a>
@@ -52115,7 +52244,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.graphics.charts.areas">reportlab.graphics.charts.areas</a>
  &#8226;   <a href="#reportlab.graphics.charts.legends">reportlab.graphics.charts.legends</a>
  &#8226;   <a href="#reportlab.graphics.charts.piecharts">reportlab.graphics.charts.piecharts</a>
@@ -52295,7 +52424,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.lib">reportlab.lib</a>
  &#8226;   <a href="#reportlab.rl_config">reportlab.rl_config</a>
 
@@ -52470,7 +52599,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.graphics.charts.textlabels">reportlab.graphics.charts.textlabels</a>
  &#8226;   <a href="#reportlab.platypus.doctemplate">reportlab.platypus.doctemplate</a>
  &#8226;   <a href="#reportlab.platypus.flowables">reportlab.platypus.flowables</a>
@@ -52518,7 +52647,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.graphics.testshapes">reportlab.graphics.testshapes</a>
  &#8226;   <a href="#reportlab.lib.corp">reportlab.lib.corp</a>
  &#8226;   <a href="#reportlab.lib.pagesizes">reportlab.lib.pagesizes</a>
@@ -53189,7 +53318,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.graphics.charts.legends">reportlab.graphics.charts.legends</a>
  &#8226;   <a href="#reportlab.graphics.charts.textlabels">reportlab.graphics.charts.textlabels</a>
  &#8226;   <a href="#reportlab.graphics.charts.utils">reportlab.graphics.charts.utils</a>
@@ -53470,7 +53599,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#reporte">reporte</a>
+    <a href="#models.reporte">models.reporte</a>
  &#8226;   <a href="#reportlab.graphics.charts.textlabels">reportlab.graphics.charts.textlabels</a>
  &#8226;   <a href="#reportlab.graphics.renderPDF">reportlab.graphics.renderPDF</a>
  &#8226;   <a href="#reportlab.graphics.shapes">reportlab.graphics.shapes</a>
@@ -61581,23 +61710,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="subsidio"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/subsidio.py" type="text/plain"><tt>subsidio</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#config">config</a>
- &#8226;   <a href="#pyodbc">pyodbc</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#app.py">app.py</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="sys"></a>
   <tt>sys</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
@@ -61758,6 +61870,7 @@ imported by:
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#markupsafe">markupsafe</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
+ &#8226;   <a href="#models.mysql_config">models.mysql_config</a>
  &#8226;   <a href="#more_itertools.more">more_itertools.more</a>
  &#8226;   <a href="#more_itertools.recipes">more_itertools.recipes</a>
  &#8226;   <a href="#multiprocessing">multiprocessing</a>
@@ -61780,7 +61893,6 @@ imported by:
  &#8226;   <a href="#mysql.connector.custom_types">mysql.connector.custom_types</a>
  &#8226;   <a href="#mysql.connector.fabric.connection">mysql.connector.fabric.connection</a>
  &#8226;   <a href="#mysql.connector.network">mysql.connector.network</a>
- &#8226;   <a href="#mysql_config">mysql_config</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#numpy">numpy</a>
  &#8226;   <a href="#numpy._core">numpy._core</a>
@@ -62753,7 +62865,6 @@ imported by:
  &#8226;   <a href="#click._termui_impl">click._termui_impl</a>
  &#8226;   <a href="#click._winconsole">click._winconsole</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
- &#8226;   <a href="#config">config</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#dateutil.parser._parser">dateutil.parser._parser</a>
  &#8226;   <a href="#dateutil.tz.tz">dateutil.tz.tz</a>
@@ -62774,6 +62885,7 @@ imported by:
  &#8226;   <a href="#ldap3.utils.ntlm">ldap3.utils.ntlm</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
+ &#8226;   <a href="#models.config">models.config</a>
  &#8226;   <a href="#more_itertools.more">more_itertools.more</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.managers">multiprocessing.managers</a>
@@ -63117,6 +63229,7 @@ imported by:
  &#8226;   <a href="#cgi">cgi</a>
  &#8226;   <a href="#code">code</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
+ &#8226;   <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
  &#8226;   <a href="#doctest">doctest</a>
  &#8226;   <a href="#flask.cli">flask.cli</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
@@ -64883,6 +64996,56 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="utils"></a>
+  <a target="code" href="-" type="text/plain"><tt>utils</tt></a>
+<span class="moduletype">NamespacePackage</span>  <div class="import">
+imported by:
+    <a href="#utils.decorators">utils.decorators</a>
+ &#8226;   <a href="#utils.logger">utils.logger</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="utils.decorators"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/utils/decorators.py" type="text/plain"><tt>utils.decorators</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#flask">flask</a>
+ &#8226;   <a href="#flask_login">flask_login</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#utils">utils</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="utils.logger"></a>
+  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/utils/logger.py" type="text/plain"><tt>utils.logger</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#logging">logging</a>
+ &#8226;   <a href="#logging.handlers">logging.handlers</a>
+ &#8226;   <a href="#utils">utils</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#app.py">app.py</a>
+ &#8226;   <a href="#controllers.prestamo_controller">controllers.prestamo_controller</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="uuid"></a>
   <a target="code" href="///C:/python/Lib/uuid.py" type="text/plain"><tt>uuid</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -64939,23 +65102,6 @@ imported by:
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
     <a href="#platform">platform</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="walton"></a>
-  <a target="code" href="///C:/Users/francisco%20salinas.BUENCAMINO/Documents/Proyectos/Python/python_login/src/walton.py" type="text/plain"><tt>walton</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#config">config</a>
- &#8226;   <a href="#pyodbc">pyodbc</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#app.py">app.py</a>
 
   </div>
 

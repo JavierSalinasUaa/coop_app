@@ -39,7 +39,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 Session(app)
 
-TIEMPO_INACTIVIDAD_SEGUNDOS = 10  # 5 minutos
+TIEMPO_INACTIVIDAD_SEGUNDOS = 900  # 15 minutos
 
 # Decorador para capturar eventos antes de la solicitud
 @app.before_request
@@ -56,7 +56,13 @@ def before_request():
             flash('Tu sesión se cerró automáticamente por inactividad. Por favor, inicia sesión nuevamente.', 'info')
             session['next'] = request.url
             logout_user()
-            return redirect(url_for('login'))
+
+            # 🛑 Aquí cambiaremos el comportamiento según si es AJAX o no
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return jsonify({"error": "Usuario no autenticado por inactividad"}), 401  # 🔹 En AJAX, devuelve JSON
+            else:
+                return redirect(url_for('login'))  # 🔹 En peticiones normales, sigue redirigiendo
+
     session['ultima_actividad'] = datetime.utcnow()
 
 # Decorador para capturar eventos después de la solicitud
@@ -90,6 +96,7 @@ def cargar_usuario(user_id):
 
 @app.route('/login_dom', methods=['GET', 'POST'])
 def login_dom():
+    urls = ["buscarPre", "filtrosPre", "borrarPre"]
     if request.method == 'POST':
         user = request.form['usuario']
         passw = request.form['contrasena']
@@ -98,7 +105,9 @@ def login_dom():
         if data:
             next_url = session.get('next')
             if next_url:
-                print(next_url)
+                if any(fragmento in next_url for fragmento in urls):
+                #if next_url in urls:                    
+                    return redirect (url_for('routes_prestamo.prestamo'))
                 session.pop('next')  # Eliminate the next URL from the session
                 return redirect(next_url)
             return redirect(url_for('index'))
@@ -154,4 +163,4 @@ if __name__ == "__main__":
     scheduler_thread = threading.Thread(target=schedule_thread)
     scheduler_thread.start()
     app.config['DEBUG'] = True
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

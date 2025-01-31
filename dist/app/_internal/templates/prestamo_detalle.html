@@ -5,7 +5,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
-        #example td, th {
+    #example td,
+    th {
         border: 1px solid #ddd;
         /* Bordes de las celdas */
         padding: 8px;
@@ -43,14 +44,14 @@
         z-index: 1000;
         /* Asegura que el spinner esté sobre la superposición */
     }
-body {
-    background-color: #ffffff;
-    /*background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1px, rgba(242,242,242,1) 1px);*/
-    background-size: 20px 20px;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
 
+    body {
+        background-color: #ffffff;
+        /*background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1px, rgba(242,242,242,1) 1px);*/
+        background-size: 20px 20px;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
 </style>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
@@ -67,9 +68,12 @@ body {
 
 <div class="container-fluid" style="font-size: 95%;">
 
-    <h2 class="text-center">
-    Seguimiento de Solicitud de Préstamo
-</h2>
+    <div class="d-flex justify-content-center align-items-center gap-3" style="margin-right: 10%; margin-bottom: 10px;">
+        <a href="{{ url_for('index')}}"><img style="width: 50%; height: 50%;"
+                src="https://www.buencaminopy.com/assets/img/core/logo-lg.png" /></a>
+        <h2 class="text-center alert alert-danger m-0" style="padding-left: 10%; padding-right: 10%;">Seguimiento de
+            Solicitud de Préstamo</h2>
+    </div>
 
     <div class="row">
         <div class="col-sm-1"></div>
@@ -82,14 +86,14 @@ body {
             <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#searchModal">
                 <i class="fas fa-plus-circle"></i> Insertar Registro de Recepción</button>
             {% endif %}
-            <button type="button" class="custom-button" data-bs-toggle="modal"
-                data-bs-target="#filtrosModal">
+            <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#filtrosModal">
                 <i class="fas fa-search"></i> Solicitudes Faltantes por Usuario</button>
             <br>
 
 
             <h5 style="text-align: left;">Buscar Recibidos</h5>
-            <form action="{{ url_for('buscarPre')}}" method="POST" class="d-flex" style="margin-bottom: 10px;">
+            <form action="{{ url_for('routes_prestamo.buscarPre')}}" method="POST" class="d-flex"
+                style="margin-bottom: 10px;">
 
                 <label for="socio" style="margin-top: 5px;" class="me-2">Fecha Desde:</label>
                 <input style="width: 15%; height: 5%;" class="form-control me-2" type="date" name="fecha" id="fecha">
@@ -141,10 +145,11 @@ body {
                                 </div>
                             </form>
                             <br>
-                            <div id="overlaym1" class="overlay" style="display: none;"></div>
-                            <div id="spinnerm1" class="spinner-border text-primary" role="status" style="display: none;">
+                            <div id="overlay3" class="overlay" style="display: none;"></div>
+                            <div id="spinner3" class="spinner-border text-primary" role="status" style="display: none;">
                                 <span class="visually-hidden">Cargando...</span>
                             </div>
+
                             <div class="d-flex justify-content-center align-items-center mb-3">
                                 <label for="totales">Total de Solicitudes de Prestamos:
                                 </label>
@@ -155,7 +160,7 @@ body {
                                 <div id="total_pendientes">
                                 </div>
                             </div>
-                            
+
                             <div id="filtrosResults">
                                 <!-- Aquí se generará la tabla con los resultados de la búsqueda -->
                             </div>
@@ -191,14 +196,15 @@ body {
                                 </div>
                             </form>
                             <br>
-                            <div id="overlaym2" class="overlay" style="display: none;"></div>
-                            <div id="spinnerm2" class="spinner-border text-primary" role="status" style="display: none;">
+                            <div id="overlay" class="overlay" style="display: none;"></div>
+                            <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
                                 <span class="visually-hidden">Cargando...</span>
                             </div>
                             <div id="tableContainer" style="display: none;">
                                 <div class="d-flex justify-content-end align-items-center mb-3">
                                     <label for="filterInput" class="me-2">Buscar:</label>
-                                    <input type="text" id="filterInput" placeholder="Buscar en la tabla..." class="form-control" style="max-width: 300px;">
+                                    <input type="text" id="filterInput" placeholder="Buscar en la tabla..."
+                                        class="form-control" style="max-width: 300px;">
                                 </div>
                             </div>
 
@@ -275,9 +281,9 @@ body {
                 </div>
             </div>
 
-            
+
             {% if prestamos %}
-            
+
 
             <div class="table table-responsive">
                 <table id="example" class="table table-striped" style="width:100%; font-size: 90%;">
@@ -396,11 +402,20 @@ body {
     <span class="visually-hidden">Cargando...</span>
 </div>
 
-
-
-
-
 <script>
+    const overlay3 = document.getElementById('overlay3');
+    const spinner3 = document.getElementById('spinner3');
+
+    function showLoadertr() {
+        overlay3.style.display = 'block';
+        spinner3.style.display = 'block';
+    }
+
+    function hideLoadertr() {
+        overlay3.style.display = 'none';
+        spinner3.style.display = 'none';
+    }
+
     document.getElementById('filtrosButton').addEventListener('click', function () {
         // Obtener los valores de las fechas desde los inputs
         const fechaInicio = document.getElementById('fecha_solicitud_ini').value;
@@ -411,13 +426,13 @@ body {
         var total_prestamos = 0;
         var pendientes = 0;
 
-        showLoaderPr();
+        showLoadertr();
 
         // Verificar que ambos campos tengan un valor
 
 
         // Enviar las fechas al backend mediante fetch
-        fetch('/filtrosPre', {
+        fetch('/routes_prestamo/filtrosPre', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -429,18 +444,24 @@ body {
             }),
         })
             .then(response => {
+                if (response.redirected) {
+                    alert("Tu sesión ha expirado. Serás redirigido al inicio de sesión.");
+                    window.location.href = response.url;  // Redirigir manualmente
+                    return;
+                }
                 if (!response.ok) {
                     // Si el servidor devuelve un error, lee el contenido JSON del error
                     return response.json().then(errData => {
+                        hideLoadertr();
                         throw new Error(errData.error || 'Error desconocido del servidor');
                     });
                 }
-                hideLoaderPr();
                 return response.json();
             })
-            .then(data => {                
+            .then(data => {
                 const contenidoModal = document.getElementById('filtrosResults');
-                contenidoModal.innerHTML = ''; // Limpia el contenido del modal                
+                contenidoModal.innerHTML = ''; // Limpia el contenido del modal
+                hideLoadertr();
 
                 // Genera el contenido dinámico
                 for (const [fecha, prestamos] of Object.entries(data)) {
@@ -456,14 +477,14 @@ body {
                     contenedor.style.justifyContent = 'center';
 
                     // Crear el encabezado
-                    const fechaHeader = document.createElement('h4');
+                    const fechaHeader = document.createElement('h3');
                     fechaHeader.textContent = `Fecha Desembolso: ${fechaFormateada}`;
                     contenedor.appendChild(fechaHeader);
 
                     // Crear el nuevo elemento (por ejemplo, un botón)
                     const nuevoElemento = document.createElement('button');
                     const nuevaPaginaURL = "{{ url_for('reporteFiltro.reporteFiltros') }}";
-                    nuevoElemento.className = 'btn btn-primary btn-sm'
+                    nuevoElemento.className = 'btn btn-primary'
                     nuevoElemento.textContent = 'Exportar Resultados';
                     nuevoElemento.style.marginLeft = '10px'; // Espacio a la derecha del encabezado
                     nuevoElemento.style.marginBottom = '10px';
@@ -521,7 +542,6 @@ body {
                         }
                     });
 
-                    
                     // Crea el pie de tabla (tfoot) para mostrar el resumen
                     const pieTabla = document.createElement('tfoot');
                     const filaPie = document.createElement('tr');
@@ -554,13 +574,12 @@ body {
                     tablaPrestamos.appendChild(cuerpoTabla);
                     contenidoModal.appendChild(tablaPrestamos); // Agrega la tabla al modal
                 }
+
                 total_pre.innerHTML = total_prestamos;
                 total_pen.innerHTML = pendientes;
-
-                
             })
             .catch(error => {
-                hideLoaderPr();
+                hideLoadertr();
                 total_pre.innerHTML = '0';
                 total_pen.innerHTML = '0';
                 console.error('Error al cargar los datos:', error);
@@ -583,7 +602,7 @@ body {
         const formData = new FormData(document.getElementById("myForm"));
         const value = document.getElementById("actionType").value;
 
-        fetch('/guardarPre', {
+        fetch('/routes_prestamo/guardarPre', {
             method: 'POST',
             body: formData
         })
@@ -611,43 +630,37 @@ body {
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    // Escuchar el evento input en el cuadro de búsqueda
-    document.getElementById('filterInput').addEventListener('input', function () {
-        const filterValue = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#searchResults table tbody tr');
+        // Escuchar el evento input en el cuadro de búsqueda
+        document.getElementById('filterInput').addEventListener('input', function () {
+            const filterValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#searchResults table tbody tr');
 
-        rows.forEach(row => {
-            const rowText = row.innerText.toLowerCase();
-            if (rowText.includes(filterValue)) {
-                row.style.display = ''; // Mostrar la fila
-            } else {
-                row.style.display = 'none'; // Ocultar la fila
-            }
+            rows.forEach(row => {
+                const rowText = row.innerText.toLowerCase();
+                if (rowText.includes(filterValue)) {
+                    row.style.display = ''; // Mostrar la fila
+                } else {
+                    row.style.display = 'none'; // Ocultar la fila
+                }
+            });
         });
     });
-});
 
 </script>
 
 <script>
 
-    const overlay = document.getElementById('overlaym1');
-    const spinner = document.getElementById('spinnerm1');
-    const overlaym2 = document.getElementById('overlaym2');
-    const spinnerm2 = document.getElementById('spinnerm2');
+    const overlay = document.getElementById('overlay');
+    const spinner = document.getElementById('spinner');
 
     function showLoaderPr() {
         overlay.style.display = 'block';
         spinner.style.display = 'block';
-        overlaym2.style.display = 'block';
-        spinnerm2.style.display = 'block';
     }
 
     function hideLoaderPr() {
         overlay.style.display = 'none';
         spinner.style.display = 'none';
-        overlaym2.style.display = 'none';
-        spinnerm2.style.display = 'none';
     }
 
     $(document).ready(function () {
@@ -668,7 +681,7 @@ body {
             }
 
             $.ajax({
-                url: '/buscarPrestamo',
+                url: '/routes_prestamo/buscarPrestamo',
                 method: 'POST',
                 data: {
                     fecha_solicitud: fecha_solicitud,
@@ -676,6 +689,7 @@ body {
                     users: users
                 },
                 success: function (response) {
+                    console.log(response.prestamos);
                     if (response.prestamos && response.prestamos.length > 0) {
                         document.getElementById('tableContainer').style.display = 'block';
                         hideLoaderPr();
@@ -721,8 +735,14 @@ body {
                     const errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Error desconocido";
                     const errorDetails = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "";
 
+                    mensaje = errorMessage;
+                    if (xhr.status === 401) {
+                        mensaje = "Tu sesión ha expirado. Serás redirigido al inicio de sesión";
+                        alert(mensaje);
+                        window.location.href = '/login';
+                    }
                     // Mostrar el error detallado
-                    document.getElementById('modalBodyAlert').textContent = errorMessage;
+                    document.getElementById('modalBodyAlert').textContent = mensaje;
                     document.getElementById('tableContainer').style.display = 'none';
                     $('#modalAlertas').modal('show');
                     document.getElementById('searchResults').innerHTML = '';
@@ -761,7 +781,7 @@ body {
 
             // Enviar los datos al servidor
             $.ajax({
-                url: '/guardarPrestamos',
+                url: '/routes_prestamo/guardarPrestamos',
                 method: 'POST',
                 processData: false,
                 contentType: false,
@@ -873,7 +893,7 @@ body {
     async function fetchHistorial(nroPrestamo) {
         try {
             showLoader();
-            const response = await fetch('/historialPre', {
+            const response = await fetch('/routes_prestamo/historialPre', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ 'nro_prestamo': nroPrestamo })
@@ -912,7 +932,7 @@ body {
     // Confirmar y enviar el número de préstamo para eliminar
     $('#confirmDelete').on('click', function () {
         $.ajax({
-            url: '/borrarPre',
+            url: '/routes_prestamo/borrarPre',
             method: 'POST',
             data: { nro_prestamo: nroPrestamo },
             success: function (response) {

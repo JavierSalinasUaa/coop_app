@@ -487,13 +487,22 @@
   ('concurrent.futures.thread',
    'C:\\python\\Lib\\concurrent\\futures\\thread.py',
    'PYMODULE'),
-  ('config',
-   'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\config.py',
-   'PYMODULE'),
   ('configparser', 'C:\\python\\Lib\\configparser.py', 'PYMODULE'),
   ('contextlib', 'C:\\python\\Lib\\contextlib.py', 'PYMODULE'),
   ('contextvars', 'C:\\python\\Lib\\contextvars.py', 'PYMODULE'),
+  ('controllers', '-', 'PYMODULE'),
+  ('controllers.prestamo_controller',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\controllers\\prestamo_controller.py',
+   'PYMODULE'),
+  ('controllers.subsidio_controller',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\controllers\\subsidio_controller.py',
+   'PYMODULE'),
+  ('controllers.walton_controller',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\controllers\\walton_controller.py',
+   'PYMODULE'),
   ('copy', 'C:\\python\\Lib\\copy.py', 'PYMODULE'),
   ('csv', 'C:\\python\\Lib\\csv.py', 'PYMODULE'),
   ('ctypes', 'C:\\python\\Lib\\ctypes\\__init__.py', 'PYMODULE'),
@@ -1039,10 +1048,6 @@
   ('json.decoder', 'C:\\python\\Lib\\json\\decoder.py', 'PYMODULE'),
   ('json.encoder', 'C:\\python\\Lib\\json\\encoder.py', 'PYMODULE'),
   ('json.scanner', 'C:\\python\\Lib\\json\\scanner.py', 'PYMODULE'),
-  ('ldap',
-   'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\ldap.py',
-   'PYMODULE'),
   ('ldap3', 'C:\\python\\Lib\\site-packages\\ldap3\\__init__.py', 'PYMODULE'),
   ('ldap3.abstract',
    'C:\\python\\Lib\\site-packages\\ldap3\\abstract\\__init__.py',
@@ -1385,10 +1390,38 @@
    'C:\\Users\\francisco '
    'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\__init__.py',
    'PYMODULE'),
+  ('models.config',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\config.py',
+   'PYMODULE'),
   ('models.entities', '-', 'PYMODULE'),
   ('models.entities.User',
    'C:\\Users\\francisco '
    'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\entities\\User.py',
+   'PYMODULE'),
+  ('models.ldap',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\ldap.py',
+   'PYMODULE'),
+  ('models.mysql_config',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\mysql_config.py',
+   'PYMODULE'),
+  ('models.reporte',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\reporte.py',
+   'PYMODULE'),
+  ('models.source_prestamo',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\source_prestamo.py',
+   'PYMODULE'),
+  ('models.source_subsidio',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\source_subsidio.py',
+   'PYMODULE'),
+  ('models.source_walton',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\models\\source_walton.py',
    'PYMODULE'),
   ('more_itertools',
    'C:\\python\\Lib\\site-packages\\setuptools\\_vendor\\more_itertools\\__init__.py',
@@ -1546,10 +1579,6 @@
    'PYMODULE'),
   ('mysql.connector.version',
    'C:\\python\\Lib\\site-packages\\mysql\\connector\\version.py',
-   'PYMODULE'),
-  ('mysql_config',
-   'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\mysql_config.py',
    'PYMODULE'),
   ('netrc', 'C:\\python\\Lib\\netrc.py', 'PYMODULE'),
   ('nturl2path', 'C:\\python\\Lib\\nturl2path.py', 'PYMODULE'),
@@ -3353,10 +3382,6 @@
    'PYMODULE'),
   ('plistlib', 'C:\\python\\Lib\\plistlib.py', 'PYMODULE'),
   ('pprint', 'C:\\python\\Lib\\pprint.py', 'PYMODULE'),
-  ('prestamo',
-   'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\prestamo.py',
-   'PYMODULE'),
   ('py_compile', 'C:\\python\\Lib\\py_compile.py', 'PYMODULE'),
   ('pyasn1', 'C:\\python\\Lib\\site-packages\\pyasn1\\__init__.py', 'PYMODULE'),
   ('pyasn1.codec',
@@ -3475,10 +3500,6 @@
   ('queue', 'C:\\python\\Lib\\queue.py', 'PYMODULE'),
   ('quopri', 'C:\\python\\Lib\\quopri.py', 'PYMODULE'),
   ('random', 'C:\\python\\Lib\\random.py', 'PYMODULE'),
-  ('reporte',
-   'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\reporte.py',
-   'PYMODULE'),
   ('reportes', '-', 'PYMODULE'),
   ('reportes.reporte_cambiosPrestamo',
    'C:\\Users\\francisco '
@@ -4543,10 +4564,6 @@
   ('string', 'C:\\python\\Lib\\string.py', 'PYMODULE'),
   ('stringprep', 'C:\\python\\Lib\\stringprep.py', 'PYMODULE'),
   ('subprocess', 'C:\\python\\Lib\\subprocess.py', 'PYMODULE'),
-  ('subsidio',
-   'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\subsidio.py',
-   'PYMODULE'),
   ('sysconfig', 'C:\\python\\Lib\\sysconfig.py', 'PYMODULE'),
   ('tarfile', 'C:\\python\\Lib\\tarfile.py', 'PYMODULE'),
   ('tempfile', 'C:\\python\\Lib\\tempfile.py', 'PYMODULE'),
@@ -4647,11 +4664,16 @@
   ('urllib.parse', 'C:\\python\\Lib\\urllib\\parse.py', 'PYMODULE'),
   ('urllib.request', 'C:\\python\\Lib\\urllib\\request.py', 'PYMODULE'),
   ('urllib.response', 'C:\\python\\Lib\\urllib\\response.py', 'PYMODULE'),
-  ('uuid', 'C:\\python\\Lib\\uuid.py', 'PYMODULE'),
-  ('walton',
+  ('utils', '-', 'PYMODULE'),
+  ('utils.decorators',
    'C:\\Users\\francisco '
-   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\walton.py',
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\utils\\decorators.py',
    'PYMODULE'),
+  ('utils.logger',
+   'C:\\Users\\francisco '
+   'salinas.BUENCAMINO\\Documents\\Proyectos\\Python\\python_login\\src\\utils\\logger.py',
+   'PYMODULE'),
+  ('uuid', 'C:\\python\\Lib\\uuid.py', 'PYMODULE'),
   ('webbrowser', 'C:\\python\\Lib\\webbrowser.py', 'PYMODULE'),
   ('werkzeug',
    'C:\\python\\Lib\\site-packages\\werkzeug\\__init__.py',

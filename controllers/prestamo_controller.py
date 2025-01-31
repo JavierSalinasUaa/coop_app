@@ -1,7 +1,7 @@
 from datetime import datetime
 import traceback
 from flask import Blueprint, app, flash, jsonify, redirect, render_template, request, session, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 from utils.logger import logger
 
 from models.mysql_config import buscarEstados, buscarPrestamo, eliminarPrestamo, guardarPrestamo, updatePrestamo, ver_historial_prestamo, verificar_existencia
@@ -112,7 +112,7 @@ def borrarPre():
 
     if row:
         flash("Préstamo eliminado exitosamente.", "success")
-        return jsonify({"status": "success", "redirect_url": url_for('prestamo')})
+        return jsonify({"status": "success", "redirect_url": url_for('routes_prestamo.prestamo')})
     else:
         return jsonify({"status": "error", "message": "No se pudo eliminar el préstamo."})
 
@@ -191,7 +191,7 @@ def buscar_datos():
         # Validar si 'fecha_solicitud' está presente
         fecha_solicitud = request.form.get('fecha_solicitud')
         fecha_solicitud_fin = request.form.get('fecha_solicitud_fin')
-        if not fecha_solicitud:
+        if fecha_solicitud is None or fecha_solicitud_fin is None:
             return jsonify({"error": "La fecha de solicitud es obligatoria"}), 400
         
         if not fecha_solicitud or not fecha_solicitud_fin:
@@ -225,8 +225,8 @@ def buscarPre():
     id_buscar = request.form.get('fecha')
     fecha_hasta = request.form.get('fecha_hasta')
 
-    if id_buscar is None or fecha_hasta is None:
-        flash("Faltan campos obligatorios en la busqueda")
+    if id_buscar is None:
+        flash("Faltan campos obligatorios en la busqueda", "success")
         return render_template('prestamo_detalle.html')
     if id_buscar == "" or fecha_hasta == "":
         flash("Sin resultados", "success")
@@ -242,5 +242,5 @@ def buscarPre():
     if rows is None or not rows:
         rows=[]
         flash("Sin resultados", "success")
-        return render_template('prestamo_detalle.html')
+        return redirect (url_for('routes_prestamo.prestamo')) 
     return render_template('prestamo_detalle.html', prestamos=rows, usuarios = usuario, estados = estado, roles = role)
