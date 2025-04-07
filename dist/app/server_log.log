@@ -1,1 +1,0 @@
-2025-03-29 00:00:00,948 - DEBUG - Running job Job(interval=1, unit=days, do=end_of_day_job, args=(), kwargs={})
