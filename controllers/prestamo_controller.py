@@ -11,7 +11,7 @@ from utils.decorators import role_required
 routes_prestamo = Blueprint('routes_prestamo', __name__)
 
 @routes_prestamo.route('/prestamo_detalle')
-@role_required({'ARCHIVO', 'ADMINISTRADOR', 'CREDITO'})
+@role_required({'ARCHIVO', 'ADMINISTRADOR', 'CREDITO', 'RECUPERACION'})
 def prestamo():
     try:
         session['prestamos'] = ''

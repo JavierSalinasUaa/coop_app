@@ -15,8 +15,9 @@ def obtenerdatos(usuario, contrasena):
     # Intenta autenticar al usuario
     try:
         # Intenta conectarte al servidor LDAP
-            with Connection(server, user=bind_dn, password=contrasena, authentication=NTLM) as conn:
-                if conn.bind():
+           with Connection(server, user=bind_dn, password=contrasena, authentication='SIMPLE') as conn:
+
+                if conn.bind():                    
                     rolUser = buscarRol(usuario)                    
                     result = rolUser[0][0] if rolUser else None
                     session['role'] = result

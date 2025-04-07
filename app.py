@@ -102,6 +102,7 @@ def login_dom():
         passw = request.form['contrasena']
 
         data = obtenerdatos(user, passw)
+        app.logger.info('%s,%s', user, passw)
         if data:
             next_url = session.get('next')
             if next_url:
